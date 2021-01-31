@@ -30,9 +30,7 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
         l1: {
             color: 0xffffff,
             opacity: 1,
-            mass: 600,
-            castShadow: true,
-            receiveShadow: true
+            mass: 600
         },
         l2: {
             color: 0xffffff,
@@ -42,26 +40,26 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
     }, this.initialValues);
 
     this.l1 = new Physijs.BoxMesh(
-        new THREE.BoxGeometry(1, 1, 2),
+        new THREE.BoxGeometry(10, 20, 10),
         this.getLambertPjsMaterial( { color: values.l1.color, opacity: values.l1.opacity } ),
         values.l1.mass
     );
 
     this.l2 = new Physijs.BoxMesh(
-        new THREE.BoxGeometry(1, 1, 2),
-        this.getLambertPjsMaterial( { color: values.l1.color, opacity: values.l1.opacity } ),
-        values.l1.mass
+        new THREE.BoxGeometry(10, 20, 10),
+        this.getLambertPjsMaterial( { color: values.l2.color, opacity: values.l2.opacity } ),
+        values.l2.mass
     );
 
     this.l1.position.set(0, 3.5, 0);
     this.l1.name = 'l1';
-    this.l1.castShadow = values.chassis.castShadow;
-    this.l1.receiveShadow = values.chassis.receiveShadow;
+    this.l1.castShadow = true;
+    this.l1.receiveShadow = true;
 
-    this.l2.position.set(0, 3.5, 0);
+    this.l2.position.set(0, 20+3.5, 0);
     this.l2.name = 'l2';
-    this.l2.castShadow = values.chassis.castShadow;
-    this.l2.receiveShadow = values.chassis.receiveShadow;
+    this.l2.castShadow = true;
+    this.l2.receiveShadow = true;
 
     this.l1.add(this.l2);
 
@@ -126,4 +124,50 @@ ArmRobotRepresentation.prototype.manageCommunicationFailure = function manageCom
     return this.data;
 }
 
+ /**
+ * Moves the robot to a specific place.
+ * @override
+ * @param {THREE.Vector3} vector - The vector with the coordinates to move the robot to
+ * @param {boolean} relative - Whether the coordinates are to be considered relative or absolute
+ * @return {ArmRobotRepresentation} - The robot
+ */
+ArmRobotRepresentation.prototype.move = function move ( vector, relative ) {
+    // vector is a THREE.Vector3 object
+    // relative is a boolean: if true, the vector is considered a change from current position, else a final destination
+    console.log ('moving to: ');
+    console.log ( vector );
+    var offset;
+    
+    if ( typeof relative === 'undefined' ) {
+        relative = false;
+    }
+    
+    offset = relative ? vector : vector.sub ( this.l1.position );
+    
+    this.l1.position.add ( offset );
+    this.l1.__dirtyPosition = true;
+    this.l1.__dirtyRotation = true;
+    
+    $.each ( this.components, function ( index, component ) {
+       component.position.add( offset );
+       component.__dirtyPosition = true;
+       component.__dirtyRotation = true;
+    });
+    
+    return this;
+}
+
+/**
+ * Rotates the robot on an axis.
+ * @override
+ * @param {THREE.Vector3} axis - The axis along which the robot should be rotated
+ * @param {float} angle - The angle of rotation, in radians
+ * @return {ArmRobotRepresentation} - The robot
+ */
+RobotRepresentation.prototype.rotateOnAxis = function rotateOnAxis ( axis, angle ) {
+    this.l1.rotateOnAxis ( axis, angle );
+    this.l1.__dirtyPosition = true;
+    this.l1.__dirtyRotation = true;
+    return this;
+}
 window["ArmRobotRepresentation"] = ArmRobotRepresentation;  // we need a reference to this function to be shared through a global object.
