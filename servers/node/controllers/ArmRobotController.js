@@ -1,6 +1,6 @@
 /**
  * @classdesc Class representing a robot's application controller.
- * @author Gatito Tof (http://loris.tissino.it)
+ * @author Gatito 
  * @release 0.71
  * @license MIT
  * @param {string} id - The id of the robot
@@ -22,4 +22,11 @@ ArmRobotController.prototype.setup = function ( options ) {
     return this;
 };
 
-module.exports = ThreeWheelDistanceSensingRobotController;
+/**
+ * Stops both wheels.
+ */
+ArmRobotController.prototype.stop = function stop () {
+    //pass
+};
+
+module.exports = ArmRobotController;
