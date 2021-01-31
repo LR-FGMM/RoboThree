@@ -1,5 +1,5 @@
-//var host = '127.0.0.1:9080';
-var host = '192.168.1.12:9080';
+var host = '127.0.0.1:9080';
+//var host = '192.168.1.12:9080';
 
 var simulationDefaults = {
     stats: {
@@ -37,7 +37,21 @@ var simulationDefaults = {
                         },
                         debugging: false
                     }
-                }/*,
+                },
+                {
+                    id: 'arm',
+                    name: "Arm",
+                    owner: 'Player One',
+                    class: 'ArmRobotRepresentation',
+                    initialValues: {
+                        position: new THREE.Vector3 ( 30, 3.5, 30 ),
+                        l1: {
+                            color: 0xbb0000
+                        },
+                        debugging: false
+                    }
+                }
+                /*,
                 {
                     id: 'blue',
                     name: "Third",
