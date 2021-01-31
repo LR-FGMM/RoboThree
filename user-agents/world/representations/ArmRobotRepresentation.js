@@ -51,12 +51,12 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
         values.l2.mass
     );
 
-    this.l1.position.set(0, 3.5, 0);
+    this.l1.position.set(0, 0, 0);
     this.l1.name = 'l1';
     this.l1.castShadow = true;
     this.l1.receiveShadow = true;
 
-    this.l2.position.set(0, 20+3.5, 0);
+    this.l2.position.set(0, 20, 0);
     this.l2.name = 'l2';
     this.l2.castShadow = true;
     this.l2.receiveShadow = true;

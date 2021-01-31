@@ -45,9 +45,6 @@ var simulationDefaults = {
                     class: 'ArmRobotRepresentation',
                     initialValues: {
                         position: new THREE.Vector3 ( 30, 3.5, 30 ),
-                        l1: {
-                            color: 0xbb0000
-                        },
                         debugging: false
                     }
                 }
