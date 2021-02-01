@@ -774,6 +774,7 @@ $(function () {
         {
             simulator.scene.simulate( undefined, 2 );
         }
+        simulator.onUpdate();
         requestAnimationFrame ( render );
         simulator.renderer.render ( simulator.scene, simulator.usedCamera );
         if ( simulator.gui.userData.controls.enableAltCamera && simulator.usedCamera.name !== 'main' ) {

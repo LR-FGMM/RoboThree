@@ -31,7 +31,7 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
         l1: {
             color: 0xffffff,
             opacity: 1,
-            mass: 600
+            mass: 0
         }
         // ,
         // l2: {
@@ -84,7 +84,7 @@ ArmRobotRepresentation.prototype.addArm = function addArm (){
     this.l2 = new Physijs.BoxMesh(
         new THREE.BoxGeometry(10, 20, 10),
         this.getLambertPjsMaterial( { color: 0xD9D900, opacity: 1} ),
-        60
+        0
     );
     this.l2.position.set(0, 22, 0);
     this.l2.name = 'l2';
