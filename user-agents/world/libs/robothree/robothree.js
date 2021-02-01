@@ -547,10 +547,11 @@ var Simulator = function ( defaults ) {
     this.initScene = function initScene ( options ) {
 
         var values = $.extend ( {}, this.defaults.scene, options );
-        this.scene = new Physijs.Scene( {reportSize: 10, fixedTimeStep: 1 / 60} );
+        //this.scene = new Physijs.Scene( {reportSize: 10, fixedTimeStep: 1 / 60} );
+        this.scene = new THREE.Scene();
         this.scene.userData = { simulator: this };
         this.scene.userData.gravity = values.gravity; // we keep a reference in order to be able to use it later...
-        this.scene.setGravity(this.scene.userData.gravity);
+        //this.scene.setGravity(this.scene.userData.gravity);
         this.scene.addEventListener( 'update', this.onUpdate.bind( this ) ); 
         return this;
     };
@@ -772,7 +773,7 @@ $(function () {
     function render () {
         if ( simulator.gui.userData.controls.simulate )
         {
-            simulator.scene.simulate( undefined, 2 );
+            //simulator.scene.simulate( undefined, 2 );
         }
         simulator.onUpdate();
         requestAnimationFrame ( render );
@@ -789,8 +790,8 @@ $(function () {
         simulator.renderDebugText();        
     };
 
-    Physijs.scripts.worker = 'libs/vendor/physijs_worker.js';
-    Physijs.scripts.ammo = 'ammo.js';
+    //Physijs.scripts.worker = 'libs/vendor/physijs_worker.js';
+    //Physijs.scripts.ammo = 'ammo.js';
 
     var simulator = new Simulator( simulationDefaults );
     simulator.initSimulation();
