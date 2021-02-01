@@ -16,7 +16,6 @@ var simulationDefaults = {
                     owner: 'Player One',
                     class: 'ArmRobotRepresentation',
                     initialValues: {
-                        position: new THREE.Vector3 ( 30, 3.5, 30 ),
                         debugging: false
                     }
                 }

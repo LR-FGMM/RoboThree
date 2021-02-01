@@ -173,6 +173,12 @@ var guiFactory = function ( simulator ) {
                     robot.rotateOnAxis ( new THREE.Vector3 ( 0, 1, 0 ), -5 * Math.PI/180 );
                 }
                 manager.add(controls, property);
+
+                property = 'move joint'
+                controls[property] = function () {
+                    robot.updateJointsAngles(50);
+                }
+                manager.add(controls, property);
                 
             });
         });
