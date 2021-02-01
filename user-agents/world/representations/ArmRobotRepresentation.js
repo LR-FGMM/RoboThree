@@ -45,6 +45,11 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
         values.l1.mass
     );
 
+    this.j1 = new THREE.Object3D();
+    this.j1.translateY(20);
+    this.j1Axis = new THREE.Vector3(0, 0, 1);
+
+
     this.l2 = new Physijs.BoxMesh(
         new THREE.BoxGeometry(10, 20, 10),
         this.getLambertPjsMaterial( { color: values.l2.color, opacity: values.l2.opacity } ),
@@ -60,8 +65,11 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
     this.l2.name = 'l2';
     this.l2.castShadow = true;
     this.l2.receiveShadow = true;
+    
+    this.l1.add(this.j1)
+    this.j1.add(this.l2);
 
-    this.l1.add(this.l2);
+
 
     return this
 }
@@ -71,12 +79,35 @@ ArmRobotRepresentation.prototype.finalizeBody = function finalizeBody () {
     return this;
 }
 
+
+/**
+ * Updates joint angles
+ * @param {float} angle - angle of the joint (degree)
+ * @return {ArmRobotRepresentation} - The Robot
+ */
+ArmRobotRepresentation.prototype.updateJointsAngles = function updateJointsAngles (angle){
+    this.j1.setRotationFromAxisAngle(this.j1Axis, angle * Math.PI / 180);
+    return this;
+}
+
+/**
+ * Updates light intensity
+ * @param {float} intensity - intensity of light (0 to 1)
+ * @return {ArmRobotRepresentation} - The Robot
+ */
+ArmRobotRepresentation.prototype.updateLightIntensity = function updateLightIntensity (intensity){
+    return this;
+}
+
 /**
  * Processes incoming data and prepares outgoing data.
  * @returns {ArmRobotRepresentation} - The robot
  */
 ArmRobotRepresentation.prototype.process = function process ( ) {
     
+    this.updateJointsAngles(this.data.joint_angle);
+    this.updateLightIntensity(this.light_intensity);
+
     for ( var i = 0; i< this.registeredProcessFunctions.length; i++ ) {
         this.registeredProcessFunctions[i]( );
     }

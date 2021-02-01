@@ -34,7 +34,12 @@ ArmRobotVirtualizer.prototype.addCommands = function addCommands () {
                             robot.commandManager.sendHTTPResponse( 200, 'text/json', { stopped: true } );
                     }
                 }
-            }
+            },
+            'moveJoint': {
+                exec: function ( ) {
+                    robot.moveJoint(robot.commandManager.parameters.angle);
+                }
+            },
         }
     }
     return this;
@@ -88,9 +93,14 @@ ArmRobotVirtualizer.prototype.exec = function ( command, parameters, originalRes
  * @param {Object} values - The parameters of the command
  */
 ArmRobotVirtualizer.prototype.update = function update ( values ) {    
-    if ( typeof values !== 'undefined' )
-    {
+    if ( typeof values !== 'undefined' ){
+        if ( values.hasOwnProperty('joint_angles') ){
+            this.joint_angles = values.joint_angles;
+        }
 
+        if ( values.hasOwnProperty('light_intensity')){
+            this.light_intensity = values.light_intensity;
+        }
     }  
     else {
         values = {};
@@ -103,7 +113,8 @@ ArmRobotVirtualizer.prototype.update = function update ( values ) {
     for (var f in this.registeredCallBacks) {
         this.registeredCallBacks[f]();
     }
-    
+    values.joint_angles = this.joint_angles
+    values.light_intensity = this.light_intensity
     return values;
 }
 

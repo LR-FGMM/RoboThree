@@ -29,4 +29,10 @@ ArmRobotController.prototype.stop = function stop () {
     //pass
 };
 
+/**
+ * Configures the joint angles
+ */
+ArmRobotController.prototype.moveJoint = function ( angle ){
+    this.joint_angle = angle;
+}
 module.exports = ArmRobotController;
