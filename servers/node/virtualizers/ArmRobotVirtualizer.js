@@ -94,6 +94,8 @@ ArmRobotVirtualizer.prototype.exec = function ( command, parameters, originalRes
  */
 ArmRobotVirtualizer.prototype.update = function update ( values ) {    
     if ( typeof values !== 'undefined' ){
+        this.location = values.location;
+        this.heading = values.heading;
         if ( values.hasOwnProperty('joint_angles') ){
             this.joint_angles = values.joint_angles;
         }
