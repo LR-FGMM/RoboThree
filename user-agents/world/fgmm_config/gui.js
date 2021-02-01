@@ -107,6 +107,10 @@ var guiFactory = function ( simulator ) {
         this.showAxis = false;
         
         this.showDebugText = false;
+
+        this.upJoints = function() {
+            robot.updateJointsAngles(controls.angle);
+        }
     }
     
     var gui = new dat.GUI();
@@ -179,6 +183,13 @@ var guiFactory = function ( simulator ) {
                     robot.updateJointsAngles(50);
                 }
                 manager.add(controls, property);
+
+                property = 'move joint b'
+                controls[property] = function () {
+                    robot.updateJointsAngles(-50);
+                }
+                manager.add(controls, property);
+
                 
             });
         });

@@ -66,8 +66,8 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
     this.l2.castShadow = true;
     this.l2.receiveShadow = true;
 
-    this.l1.add(j1);
-    this.j1.add(l2);
+    this.l1.add(this.j1);
+    this.j1.add(this.l2);
 
     return this
 }
@@ -116,7 +116,10 @@ ArmRobotRepresentation.prototype.finalizeBody = function finalizeBody () {
  * @return {ArmRobotRepresentation} - The Robot
  */
 ArmRobotRepresentation.prototype.updateJointsAngles = function updateJointsAngles (angle){
-    this.armConstraint.configureAngularMotor( 2, 0.1, 0, 50, 15000 );
+    //this.armConstraint.configureAngularMotor( 2, 0.1, 0, 50, 15000 );
+    this.j1.setRotationFromAxisAngle(this.j1Axis, angle * Math.PI / 180);
+    this.j1.__dirtyPosition = true;
+    this.j1.__dirtyRotation = true;
     return this;
 }
 
