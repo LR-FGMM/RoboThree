@@ -14,6 +14,7 @@ ArmRobotRepresentation.prototype.build = function build () {
             //.addMotor()
             //.addVirtualCamera()
             .finalizeBody()
+            .addArm()
             ;
         this.isBuilt = true;
         return true;
@@ -33,9 +34,9 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
             mass: 600
         },
         l2: {
-            color: 0x6a0dad,
-            opacity: 1,
-            mass: 600
+            color:0xD9D900,
+            opacity: 0.5,
+            mass:600
         }
     }, this.initialValues);
 
@@ -45,14 +46,9 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
         values.l1.mass
     );
 
-    //this.j1 = new THREE.Object3D();
-    //this.j1.translateY(20);
-    this.j1Axis = new THREE.Vector3(0, 0, 1);
-
-
     this.l2 = new Physijs.BoxMesh(
         new THREE.BoxGeometry(10, 20, 10),
-        this.getLambertPjsMaterial( { color: values.l2.color, opacity: values.l2.opacity } ),
+        this.getLambertPjsMaterial( { color: values.l2.color, opacity: values.l2.opacity} ),
         values.l2.mass
     );
 
@@ -61,27 +57,50 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
     this.l1.castShadow = true;
     this.l1.receiveShadow = true;
 
-    this.l2.position.set(0, 22, 0);
+    this.j1 = new THREE.Object3D();
+    this.j1.translateY(20);
+    this.j1Axis = new THREE.Vector3(0, 0, 1);
+
+    this.l2.position.set(0, 0, 0);
     this.l2.name = 'l2';
     this.l2.castShadow = true;
     this.l2.receiveShadow = true;
-    
-    //this.l1.add(this.l2)
-    //this.j1.add(this.l2);
-    this.scene.add(this.l2)
-    var constraintPosition = this.l2.position.clone().add( new THREE.Vector3 ( 0, -10, 0 ) );
-    
-    this.armConstraint = this.createDOFConstraint( this.l1, this.l2, constraintPosition, new THREE.Vector3 ( 0, 0, 1 ));
-    
-    this.scene.addConstraint( this.armConstraint, true );
-    
-    this.armConstraint.setLinearLowerLimit( new THREE.Vector3( 0, 0, 0 ) ); // sets the lower end of the linear movement along the x, y, and z axes.
-    this.armConstraint.setLinearUpperLimit( new THREE.Vector3( 0, 0, 0 ) ); // sets the upper end of the linear movement along the x, y, and z axes.
-    this.armConstraint.setAngularLowerLimit( new THREE.Vector3( 0, -Math.PI, 0 ) ); // sets the lower end of the angular movement, in radians, along the x, y, and z axes.
-    this.armConstraint.setAngularUpperLimit( new THREE.Vector3( 0, Math.PI, 0 ) ); // sets the upper end of the angular movement, in radians, along the x, y, and z axes.
-    this.armConstraint.configureAngularMotor(2, 0.1, 0.2, 0, 1500);
-    this.armConstraint.enableAngularMotor(2);
 
+    this.l1.add(j1);
+    this.j1.add(l2);
+
+    return this
+}
+
+ArmRobotRepresentation.prototype.addArm = function addArm (){
+    // this.l2 = new Physijs.BoxMesh(
+    //     new THREE.BoxGeometry(10, 20, 10),
+    //     this.getLambertPjsMaterial( { color: 0xD9D900, opacity: 1} ),
+    //     60
+    // );
+    // this.l2.position.set(0, 22, 0);
+    // this.l2.name = 'l2';
+    // this.l2.castShadow = true;
+    // this.l2.receiveShadow = true;
+
+
+
+    
+    // //this.l1.add(this.l2)
+    // //this.j1.add(this.l2);
+    // this.scene.add(this.l2)
+    // var constraintPosition = this.l2.position.clone().add( new THREE.Vector3 ( 0, -10, 0 ) );
+    
+    // this.armConstraint = this.createDOFConstraint( this.l1, this.l2, constraintPosition, new THREE.Vector3 ( 0, 0, 1 ));
+    
+    // this.scene.addConstraint( this.armConstraint, true );
+    
+    // this.armConstraint.setLinearLowerLimit( new THREE.Vector3( 0, 0, 0 ) ); // sets the lower end of the linear movement along the x, y, and z axes.
+    // this.armConstraint.setLinearUpperLimit( new THREE.Vector3( 0, 0, 0 ) ); // sets the upper end of the linear movement along the x, y, and z axes.
+    // this.armConstraint.setAngularLowerLimit( new THREE.Vector3( 0, -Math.PI, 0 ) ); // sets the lower end of the angular movement, in radians, along the x, y, and z axes.
+    // this.armConstraint.setAngularUpperLimit( new THREE.Vector3( 0, Math.PI, 0 ) ); // sets the upper end of the angular movement, in radians, along the x, y, and z axes.
+    // this.armConstraint.configureAngularMotor(2, 0.1, 0.2, 0, 1500);
+    // this.armConstraint.enableAngularMotor(2);
     return this
 }
 
