@@ -36,7 +36,7 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
         ,
         l2: {
             color:0xD9D900,
-            opacity: 0.5,
+            opacity: 1,
             mass:600
         }
     }, this.initialValues);
@@ -53,23 +53,23 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
         values.l2.mass
     );
 
-    this.l1.position.set(0, 12, 0);
+    this.l1.position.set(0, 10, 0);
     this.l1.name = 'l1';
     this.l1.castShadow = true;
     this.l1.receiveShadow = true;
 
     this.j1 = new THREE.Object3D();
-    this.j1.translateY(20);
+    this.j1.translateY(10);
     this.j1Axis = new THREE.Vector3(0, 0, 1);
 
-    this.l2.position.set(0, 22, 0);
+    this.l2.position.set(0, 10, 0);
     this.l2.name = 'l2';
     this.l2.castShadow = true;
     this.l2.receiveShadow = true;
 
-    //this.l1.add(this.j1);
-    //this.j1.add(this.l2);
-    this.l1.add(this.l2);
+    this.l1.add(this.j1);
+    this.j1.add(this.l2);
+    //this.l1.add(this.l2);
     // this.j1 = new Physijs.BoxMesh(
     //     new THREE.BoxGeometry(0,0,0),
     //     this.getLambertPjsMaterial({color:0xD9D900, opacity:1}),
@@ -138,7 +138,7 @@ ArmRobotRepresentation.prototype.finalizeBody = function finalizeBody () {
 ArmRobotRepresentation.prototype.updateJointsAngles = function updateJointsAngles (angle){
     //this.armConstraint.configureAngularMotor( 2, 0.1, 0, 50, 15000 );
     //this.j1.setRotationFromAxisAngle(this.j1Axis, angle * Math.PI / 180);
-    this.l2.rotateOnAxis(new THREE.Vector3(0,0,1,angle))
+    this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),angle);
     //this.j1.__dirtyPosition = true;
     //this.j1.__dirtyRotation = true;
     return this;
@@ -159,7 +159,7 @@ ArmRobotRepresentation.prototype.updateLightIntensity = function updateLightInte
  */
 ArmRobotRepresentation.prototype.process = function process ( ) {
     
-    this.updateJointsAngles(this.data.joint_angle);
+    //this.updateJointsAngles(this.data.joint_angle);
     this.updateLightIntensity(this.light_intensity);
 
     for ( var i = 0; i< this.registeredProcessFunctions.length; i++ ) {
