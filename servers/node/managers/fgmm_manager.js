@@ -32,6 +32,10 @@ for (var id in robots) {
 }
 
 var mainServer = http.createServer(function (request, response) {
+    if (request.url == '/'){
+        
+    }
+    
     if (request.method !== 'POST') {
         response.writeHead(405, { 'Content-Type': 'text/plain' });
         response.write('Method Not Allowed');
