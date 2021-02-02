@@ -19,7 +19,7 @@ var roboThreeRelease = '0.70';
 var managerName = "FGGM manager";
 
 var robots = {
-    arm: new ArmRobotController('green')
+    arm: new ArmRobotController('arm')
 };
 
 for (var id in robots) {
