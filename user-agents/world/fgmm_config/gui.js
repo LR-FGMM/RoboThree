@@ -117,7 +117,7 @@ var guiFactory = function ( simulator ) {
     
     //gui.remember ( controls );
     
-    function addRobotsToGui( simulator, gui ,l1,l2) {
+    function addRobotsToGui( simulator, gui ,l1,l2,l3) {
         console.log ( 'adding robots to gui list...' );
         
         $.each ( gui.userData.managersSubfolders, function ( index, manager ) {
@@ -125,7 +125,7 @@ var guiFactory = function ( simulator ) {
             $.each ( manager.userData.robotsManager.robots, function ( index, robot ) {
                 var property = 'buildRobot: '+robot.id;
                 controls[property] = function () {
-                    if ( robot.build(l1,l2) ) {
+                    if ( robot.build(l1,l2,l3) ) {
                         if ( robot.hasCamera() ) {
                             gui.userData.cameras[robot.id] = robot.camera.uuid;
                             
@@ -248,7 +248,7 @@ var guiFactory = function ( simulator ) {
 
     const loader = new THREE.STLLoader();
 
-    var l1, l2;
+    var l1, l2, l3;
 
     loader.load( './models/base.stl', function ( geometry ) {
 
@@ -268,13 +268,22 @@ var guiFactory = function ( simulator ) {
         
     } );
 
+    loader.load( './models/cabeza.stl', function ( geometry ) {
+
+        const material3 = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
+        l3 = new THREE.Mesh( geometry, material3 );
+        next();
+
+        
+    } );
+
 
 
     function next() {
-        if (l1 && l2) {
+        if (l1 && l2 && l3) {
           console.log('done');
           console.log ( "adding actual robots..." );
-          setTimeout ( addRobotsToGui, 5000, simulator, gui,l1 ,l2);
+          setTimeout ( addRobotsToGui, 5000, simulator, gui,l1 ,l2,l3);
           console.log(gui.userData);
         }
       }
