@@ -41,14 +41,16 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
         }
     }, this.initialValues);
 
-    const loader = new STLLoader();
-    loader.load( './models/stl/l1.stl', function ( geometry ) {
+    const loader = new THREE.STLLoader();
+    loader.load( './models/l1.stl', function ( geometry ) {
 
         const material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
         this.l1 = new THREE.Mesh( geometry, material );
 
         this.l1.castShadow = true;
         this.l1.receiveShadow = true;
+        this.l1.position.set(0, 10, 0);
+        this.l1.name = 'l1';
 
     } );
 
@@ -58,10 +60,7 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
         values.l2.mass
     );
 
-    this.l1.position.set(0, 10, 0);
-    this.l1.name = 'l1';
-    this.l1.castShadow = true;
-    this.l1.receiveShadow = true;
+
 
     this.j1 = new THREE.Object3D();
     this.j1.translateY(10);
@@ -72,8 +71,8 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
     this.l2.castShadow = true;
     this.l2.receiveShadow = true;
 
-    this.l1.add(this.j1);
-    this.j1.add(this.l2);
+    //this.l1.add(this.j1);
+    //this.j1.add(this.l2);
     //this.l1.add(this.l2);
     // this.j1 = new Physijs.BoxMesh(
     //     new THREE.BoxGeometry(0,0,0),
