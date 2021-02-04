@@ -1,4 +1,3 @@
-import { STLLoader } from './jsm/loaders/STLLoader.js';
 'use strict';
 var ArmRobotRepresentation = function () {
 };
