@@ -1,3 +1,4 @@
+import { STLLoader } from './jsm/loaders/STLLoader.js';
 'use strict';
 var ArmRobotRepresentation = function () {
 };
@@ -41,11 +42,16 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
         }
     }, this.initialValues);
 
-    this.l1 = new Physijs.BoxMesh(
-        new THREE.BoxGeometry(10, 20, 10),
-        this.getLambertPjsMaterial( { color: values.l1.color, opacity: values.l1.opacity } ),
-        values.l1.mass
-    );
+    const loader = new STLLoader();
+    loader.load( './models/stl/l1.stl', function ( geometry ) {
+
+        const material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
+        this.l1 = new THREE.Mesh( geometry, material );
+
+        this.l1.castShadow = true;
+        this.l1.receiveShadow = true;
+
+    } );
 
     this.l2 = new Physijs.BoxMesh(
         new THREE.BoxGeometry(10, 20, 10),
