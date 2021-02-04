@@ -4,12 +4,12 @@ var ArmRobotRepresentation = function () {
 
 $.extend ( ArmRobotRepresentation.prototype, RobotRepresentation.prototype );
 
-ArmRobotRepresentation.prototype.build = function build () {
+ArmRobotRepresentation.prototype.build = function build (l1) {
     
     if ( !this.isBuilt ) {
         console.log( "Building robot: " + this.id );
         this
-            .addBody()
+            .addBody(l1)
             //.addLight()
             //.addMotor()
             //.addVirtualCamera()
@@ -25,7 +25,7 @@ ArmRobotRepresentation.prototype.build = function build () {
     }
 }
 
-ArmRobotRepresentation.prototype.addBody = function addBody () {
+ArmRobotRepresentation.prototype.addBody = function addBody (l1) {
     
     var values = $.extend ( {
         l1: {
@@ -41,20 +41,17 @@ ArmRobotRepresentation.prototype.addBody = function addBody () {
         }
     }, this.initialValues);
 
-    const loader = new THREE.STLLoader();
-    loader.load( './models/l1.stl', function ( geometry ) {
+    this.l1 = l1;
+    this.l1.castShadow = true;
+    this.l1.receiveShadow = true;
+    this.l1.position.set(0, 10, 0);
+    this.l1.scale.set(0.5,0.5,0.5);
+    this.l1.name = 'l1';
 
-        const material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
-        this.l1 = new THREE.Mesh( geometry, material );
-
-        this.l1.castShadow = true;
-        this.l1.receiveShadow = true;
-        this.l1.position.set(0, 10, 0);
-        this.l1.name = 'l1';
-
-    } );
+    console.log(this.l1);
 
     this.l2 = new Physijs.BoxMesh(
+
         new THREE.BoxGeometry(10, 20, 10),
         this.getLambertPjsMaterial( { color: values.l2.color, opacity: values.l2.opacity} ),
         values.l2.mass
