@@ -45,20 +45,15 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1) {
     this.l1.castShadow = true;
     this.l1.receiveShadow = true;
     this.l1.position.set(0, 10, 0);
-    this.l1.scale.set(0.5,0.5,0.5);
+    this.l1.scale.set(0.1,0.1,0.1);
     this.l1.name = 'l1';
+
+    this.l1.rotation.set(Math.PI / 2,0,0);
 
     console.log(this.l1);
 
-    this.l2 = new Physijs.BoxMesh(
-
-        new THREE.BoxGeometry(10, 20, 10),
-        this.getLambertPjsMaterial( { color: values.l2.color, opacity: values.l2.opacity} ),
-        values.l2.mass
-    );
-
-
-
+    this.l2 = new THREE.BoxGeometry(10, 20, 10);
+   
     this.j1 = new THREE.Object3D();
     this.j1.translateY(10);
     this.j1Axis = new THREE.Vector3(0, 0, 1);
@@ -68,8 +63,8 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1) {
     this.l2.castShadow = true;
     this.l2.receiveShadow = true;
 
-    //this.l1.add(this.j1);
-    //this.j1.add(this.l2);
+    this.l1.add(this.j1);
+    this.j1.add(this.l2);
     //this.l1.add(this.l2);
     // this.j1 = new Physijs.BoxMesh(
     //     new THREE.BoxGeometry(0,0,0),
