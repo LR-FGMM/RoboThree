@@ -117,7 +117,7 @@ var guiFactory = function ( simulator ) {
     
     //gui.remember ( controls );
     
-    function addRobotsToGui( simulator, gui ,l1) {
+    function addRobotsToGui( simulator, gui ,l1,l2) {
         console.log ( 'adding robots to gui list...' );
         
         $.each ( gui.userData.managersSubfolders, function ( index, manager ) {
@@ -125,7 +125,7 @@ var guiFactory = function ( simulator ) {
             $.each ( manager.userData.robotsManager.robots, function ( index, robot ) {
                 var property = 'buildRobot: '+robot.id;
                 controls[property] = function () {
-                    if ( robot.build(l1) ) {
+                    if ( robot.build(l1,l2) ) {
                         if ( robot.hasCamera() ) {
                             gui.userData.cameras[robot.id] = robot.camera.uuid;
                             
@@ -248,19 +248,36 @@ var guiFactory = function ( simulator ) {
 
     const loader = new THREE.STLLoader();
 
-    loader.load( './models/l1.stl', function ( geometry ) {
+    var l1, l2;
+
+    loader.load( './models/base.stl', function ( geometry ) {
 
         const material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
-        var l1 = new THREE.Mesh( geometry, material );
+        l1 = new THREE.Mesh( geometry, material );
+        next();
 
-        console.log ( "adding actual robots..." );
-        setTimeout ( addRobotsToGui, 5000, simulator, gui,l1 );
+        
+    } );
+    
+    loader.load( './models/brazos.stl', function ( geometry ) {
+
+        const material2 = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
+        l2 = new THREE.Mesh( geometry, material2 );
+        next();
+
+        
     } );
 
 
 
+    function next() {
+        if (l1 && l2) {
+          console.log('done');
+          console.log ( "adding actual robots..." );
+          setTimeout ( addRobotsToGui, 5000, simulator, gui,l1 ,l2);
+          console.log(gui.userData);
+        }
+      }
 
-    
-    console.log(gui.userData);
     return gui;
 };

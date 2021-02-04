@@ -4,12 +4,12 @@ var ArmRobotRepresentation = function () {
 
 $.extend ( ArmRobotRepresentation.prototype, RobotRepresentation.prototype );
 
-ArmRobotRepresentation.prototype.build = function build (l1) {
+ArmRobotRepresentation.prototype.build = function build (l1,l2) {
     
     if ( !this.isBuilt ) {
         console.log( "Building robot: " + this.id );
         this
-            .addBody(l1)
+            .addBody(l1,l2)
             //.addLight()
             //.addMotor()
             //.addVirtualCamera()
@@ -25,7 +25,7 @@ ArmRobotRepresentation.prototype.build = function build (l1) {
     }
 }
 
-ArmRobotRepresentation.prototype.addBody = function addBody (l1) {
+ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2) {
     
     var values = $.extend ( {
         l1: {
@@ -52,16 +52,20 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1) {
 
     console.log(this.l1);
 
-    this.l2 = new THREE.BoxGeometry(10, 20, 10);
-   
+    //var material = new THREE.MeshBasicMaterial({color:'red'});
+
+    //this.l2 = new THREE.Mesh( new THREE.BoxGeometry(10, 20, 10), material );
+    this.l2 = l2;
+    this.l2.castShadow = true;
+    this.l2.receiveShadow = true;
+    this.l2.position.set(0, 0, 0);
+    this.l2.scale.set(0.1,0.1,0.1);
+    this.l2.name = 'l2';
+    this.l2.rotation.set(Math.PI / 2,0,0);
+
     this.j1 = new THREE.Object3D();
     this.j1.translateY(10);
     this.j1Axis = new THREE.Vector3(0, 0, 1);
-
-    this.l2.position.set(0, 10, 0);
-    this.l2.name = 'l2';
-    this.l2.castShadow = true;
-    this.l2.receiveShadow = true;
 
     this.l1.add(this.j1);
     this.j1.add(this.l2);
