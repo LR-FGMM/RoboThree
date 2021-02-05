@@ -29,28 +29,13 @@ var guiFactory = function ( simulator ) {
         
     var controls = new function () {
         
-        this.camPositionX = simulator.mainCamera.position.x;
-        this.camPositionY = simulator.mainCamera.position.y;
-        this.camPositionZ = simulator.mainCamera.position.z;
-        
-        this.camFov = simulator.mainCamera.fov;
 
-        this.camLookAtX = 0;
-        this.camLookAtY = 0;
-        this.camLookAtZ = 0;
         
         /*
         this.camRotationX = simulator.mainCamera.rotation.x;
         this.camRotationY = simulator.mainCamera.rotation.y;
         this.camRotationZ = simulator.mainCamera.rotation.z;
         */
-        
-        this.changeCamera = function changeCamera() {
-            simulator.mainCamera.position.set( controls.camPositionX, controls.camPositionY, controls.camPositionZ );
-            simulator.mainCamera.fov = controls.camFov;
-            simulator.mainCamera.lookAt( new THREE.Vector3(controls.camLookAtX, controls.camLookAtY, controls.camLookAtZ ));
-            simulator.mainCamera.updateProjectionMatrix();
-        };
         
         
         this.lightPositionX = simulator.light.position.x;
@@ -108,9 +93,6 @@ var guiFactory = function ( simulator ) {
         
         this.showDebugText = false;
 
-        this.upJoints = function() {
-            robot.updateJointsAngles(controls.angle);
-        }
     }
     
     var gui = new dat.GUI();
@@ -180,13 +162,13 @@ var guiFactory = function ( simulator ) {
 
                 property = 'move joint'
                 controls[property] = function () {
-                    robot.updateJointsAngles(50);
+                    robot.updateJointsAngles(50,50);
                 }
                 manager.add(controls, property);
 
                 property = 'move joint b'
                 controls[property] = function () {
-                    robot.updateJointsAngles(-50);
+                    robot.updateJointsAngles(-50,-50);
                 }
                 manager.add(controls, property);
 
@@ -203,15 +185,6 @@ var guiFactory = function ( simulator ) {
     
     gui.userData.cameras['main'] = simulator.mainCamera.uuid;
     
-    var camera = gui.addFolder("Camera");
-    
-    camera.add(controls, 'camPositionX', -400, 400).onChange(controls.changeCamera);
-    camera.add(controls, 'camPositionY', 0, 800).onChange(controls.changeCamera);
-    camera.add(controls, 'camPositionZ', -400, 400).onChange(controls.changeCamera);
-    camera.add(controls, 'camFov', 1, 100).onChange(controls.changeCamera);
-    camera.add(controls, 'camLookAtX', -400, 400).onChange(controls.changeCamera);
-    camera.add(controls, 'camLookAtY', -400, 400).onChange(controls.changeCamera);
-    camera.add(controls, 'camLookAtZ', -400, 400).onChange(controls.changeCamera);
     
     var light = gui.addFolder("Light");
     light.add(controls, 'lightPositionX', -400, 400).onChange(controls.changeLight);

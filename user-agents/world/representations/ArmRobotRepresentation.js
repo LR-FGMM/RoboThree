@@ -69,6 +69,8 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3) {
     this.j1.translateZ(-10);
     this.j1Axis = new THREE.Vector3(0, 0, 1);
 
+    this.j2 = new THREE.Object3D();
+
     this.l3 = l3;
     this.l3.castShadow = true;
     this.l3.receiveShadow = true;
@@ -79,7 +81,8 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3) {
 
     this.l1.add(this.j1);
     this.j1.add(this.l2);
-    this.l2.add(this.l3)
+    this.l2.add(this.j2);
+    this.j2.add(this.l3);
     //this.l1.add(this.l2);
     // this.j1 = new Physijs.BoxMesh(
     //     new THREE.BoxGeometry(0,0,0),
@@ -146,10 +149,11 @@ ArmRobotRepresentation.prototype.finalizeBody = function finalizeBody () {
  * @param {float} angle - angle of the joint (degree)
  * @return {ArmRobotRepresentation} - The Robot
  */
-ArmRobotRepresentation.prototype.updateJointsAngles = function updateJointsAngles (angle){
+ArmRobotRepresentation.prototype.updateJointsAngles = function updateJointsAngles (angle1,angle2){
     //this.armConstraint.configureAngularMotor( 2, 0.1, 0, 50, 15000 );
     //this.j1.setRotationFromAxisAngle(this.j1Axis, angle * Math.PI / 180);
-    this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),angle);
+    this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),angle1);
+    this.l3.rotateOnAxis(new THREE.Vector3(1,0,0),angle2);
     //this.j1.__dirtyPosition = true;
     //this.j1.__dirtyRotation = true;
     return this;
@@ -262,8 +266,8 @@ ArmRobotRepresentation.prototype.move = function move ( vector, relative ) {
  */
 RobotRepresentation.prototype.rotateOnAxis = function rotateOnAxis ( axis, angle ) {
     this.l1.rotateOnAxis ( axis, angle );
-    this.l1.__dirtyPosition = true;
-    this.l1.__dirtyRotation = true;
+    //this.l1.__dirtyPosition = true;
+    //this.l1.__dirtyRotation = true;
     return this;
 }
 window["ArmRobotRepresentation"] = ArmRobotRepresentation;  // we need a reference to this function to be shared through a global object.
