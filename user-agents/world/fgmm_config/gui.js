@@ -3,14 +3,8 @@ var guiFactory = function ( simulator ) {
     //var scale = chroma.scale(['white', 'blue', 'red', 'yellow']);
 
     function getMaterial(color) {
-        var material = Physijs.createMaterial(
-                new THREE.MeshLambertMaterial(
-                        {
-                            //color: scale(Math.random()).hex(),
-                            color: color,
-                            opacity: 1,
-                            transparent: true
-                        }), 0.5, 0.7);
+        var material = new THREE.MeshPhongMaterial( { color: color, specular: 0x111111, shininess: 200 } );
+
 
         return material;
     }
@@ -18,7 +12,7 @@ var guiFactory = function ( simulator ) {
     function setPosAndShade(obj) {
         obj.position.set(
                 Math.random() * 100 - 50,
-                20,
+                100 + Math.random()*100,
                 Math.random() * 100 - 50
         );
 
@@ -61,10 +55,9 @@ var guiFactory = function ( simulator ) {
         };
         
         this.addSphereMesh = function () {
-            var sphere = new Physijs.SphereMesh(
+            var sphere = new THREE.Mesh(
                 new THREE.SphereGeometry(6, 32),
-                getMaterial( this.meshColor ),
-                50
+                getMaterial( this.meshColor )
             );
             setPosAndShade(sphere);
             simulator.scene.add(sphere);
@@ -99,7 +92,7 @@ var guiFactory = function ( simulator ) {
     
     //gui.remember ( controls );
     
-    function addRobotsToGui( simulator, gui ,l1,l2,l3) {
+    function addRobotsToGui( simulator, gui ,l1,l2,l3,l4) {
         console.log ( 'adding robots to gui list...' );
         
         $.each ( gui.userData.managersSubfolders, function ( index, manager ) {
@@ -107,7 +100,7 @@ var guiFactory = function ( simulator ) {
             $.each ( manager.userData.robotsManager.robots, function ( index, robot ) {
                 var property = 'buildRobot: '+robot.id;
                 controls[property] = function () {
-                    if ( robot.build(l1,l2,l3) ) {
+                    if ( robot.build(l1,l2,l3,l4) ) {
                         if ( robot.hasCamera() ) {
                             gui.userData.cameras[robot.id] = robot.camera.uuid;
                             
@@ -160,15 +153,27 @@ var guiFactory = function ( simulator ) {
                 }
                 manager.add(controls, property);
 
-                property = 'move joint'
+                property = 'move +yaw'
                 controls[property] = function () {
-                    robot.updateJointsAngles(50,50);
+                    robot.updateJointsAngles(50,0);
                 }
                 manager.add(controls, property);
 
-                property = 'move joint b'
+                property = 'move -yaw'
                 controls[property] = function () {
-                    robot.updateJointsAngles(-50,-50);
+                    robot.updateJointsAngles(-50,0);
+                }
+                manager.add(controls, property);
+
+                property = 'move +pitch'
+                controls[property] = function () {
+                    robot.updateJointsAngles(0,25);
+                }
+                manager.add(controls, property);
+
+                property = 'move -pitch'
+                controls[property] = function () {
+                    robot.updateJointsAngles(0,-25);
                 }
                 manager.add(controls, property);
 
@@ -221,7 +226,7 @@ var guiFactory = function ( simulator ) {
 
     const loader = new THREE.STLLoader();
 
-    var l1, l2, l3;
+    var l1, l2, l3, l4;
 
     loader.load( './models/base.stl', function ( geometry ) {
 
@@ -250,13 +255,24 @@ var guiFactory = function ( simulator ) {
         
     } );
 
+    loader.load( './models/luz.stl', function ( geometry ) {
+
+        const material4 = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
+        l4 = new THREE.Mesh( geometry, material4 );
+        next();
+
+        
+    } );
+
+    
+
 
 
     function next() {
-        if (l1 && l2 && l3) {
+        if (l1 && l2 && l3 && l4) {
           console.log('done');
           console.log ( "adding actual robots..." );
-          setTimeout ( addRobotsToGui, 5000, simulator, gui,l1 ,l2,l3);
+          setTimeout ( addRobotsToGui, 5000, simulator, gui,l1 ,l2,l3,l4);
           console.log(gui.userData);
         }
       }

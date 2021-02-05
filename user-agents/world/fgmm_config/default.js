@@ -63,7 +63,7 @@ var simulationDefaults = {
             },
             leftBorder: {
                 sizeX: 4,
-                sizeY: 4,
+                sizeY: 100,
                 sizeZ: 256,
                 position: new THREE.Vector3( -130, 2, 0 ),
                 color: 0xE8AE8A

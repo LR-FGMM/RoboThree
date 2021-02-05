@@ -4,12 +4,12 @@ var ArmRobotRepresentation = function () {
 
 $.extend ( ArmRobotRepresentation.prototype, RobotRepresentation.prototype );
 
-ArmRobotRepresentation.prototype.build = function build (l1,l2,l3) {
+ArmRobotRepresentation.prototype.build = function build (l1,l2,l3,l4) {
     
     if ( !this.isBuilt ) {
         console.log( "Building robot: " + this.id );
         this
-            .addBody(l1,l2,l3)
+            .addBody(l1,l2,l3,l4)
             //.addLight()
             //.addMotor()
             //.addVirtualCamera()
@@ -25,7 +25,7 @@ ArmRobotRepresentation.prototype.build = function build (l1,l2,l3) {
     }
 }
 
-ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3) {
+ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
     
     var values = $.extend ( {
         l1: {
@@ -69,20 +69,48 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3) {
     this.j1.translateZ(-10);
     this.j1Axis = new THREE.Vector3(0, 0, 1);
 
+    const l3_offset = 165;
+
     this.j2 = new THREE.Object3D();
+    this.j2.translateZ(l3_offset);
+    //this.j2Axis = new THREE.Vector3(1,0,0);
+    //this.j2.add(this.j2Axis);
 
     this.l3 = l3;
     this.l3.castShadow = true;
     this.l3.receiveShadow = true;
-    this.l3.position.set(0, 0, 0);
+    this.l3.translateZ(-l3_offset);
+    //this.l3.translateZ(-20);
+    //this.l3.position.set(0, 0, 0);
     //this.l3.scale.set(0.1,0.1,0.1);
     this.l3.name = 'l3';
 
+    this.l4 = l4;
+    this.l4.castShadow = true;
+    this.l4.receiveShadow = true;
+    this.l4.name = 'l4'
+
+    this.spotLight = new THREE.SpotLight( 0xffffff,5 );
+    this.spotLight.position.set( 0, 0, 150 );
+    
+    //this.spotLight.castShadow = true;
+    
+
+    //this.spotLight.castShadow = false;
+    this.spotLight.angle = 0.3;
+    this.spotLight.penumbra = 0.2;
+    //this.spotLight.decay = 2;
+    this.spotLight.distance = 0;
+
+    this.spotLight.target.position.set(0,0,600);
 
     this.l1.add(this.j1);
     this.j1.add(this.l2);
     this.l2.add(this.j2);
     this.j2.add(this.l3);
+    this.l3.add(this.l4);
+    this.l4.add(this.spotLight);
+    this.l4.add(this.spotLight.target);
     //this.l1.add(this.l2);
     // this.j1 = new Physijs.BoxMesh(
     //     new THREE.BoxGeometry(0,0,0),
@@ -153,7 +181,7 @@ ArmRobotRepresentation.prototype.updateJointsAngles = function updateJointsAngle
     //this.armConstraint.configureAngularMotor( 2, 0.1, 0, 50, 15000 );
     //this.j1.setRotationFromAxisAngle(this.j1Axis, angle * Math.PI / 180);
     this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),angle1);
-    this.l3.rotateOnAxis(new THREE.Vector3(1,0,0),angle2);
+    this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),angle2);
     //this.j1.__dirtyPosition = true;
     //this.j1.__dirtyRotation = true;
     return this;
