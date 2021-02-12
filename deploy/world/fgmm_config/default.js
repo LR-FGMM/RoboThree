@@ -7,7 +7,7 @@ var simulationDefaults = {
         },
     robotsManagers: {
         main: {
-            url: "http://" + host + "/update",
+            url: host + "/update",
             failureColor: 0xffaaaa,
             robots: [
                 {
