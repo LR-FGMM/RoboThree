@@ -1,1 +1,3 @@
 */node_modules/*
+deploy/fake-server/node_modules/
+*.cache
