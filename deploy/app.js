@@ -13,6 +13,7 @@ extend ( ArmRobotController.prototype, ArmRobotVirtualizer.prototype );
 
 'use strict';
 
+const app = express();
 const port = process.env.PORT  || 9080;
 
 var roboThreeRelease = '0.70';
@@ -30,6 +31,10 @@ for (var id in robots) {
         ;
     console.log ( "Activated robot: «" + id + "»" );
 }
+
+app.get('/', (req,res) => {
+    res.send('Hello World!')
+});
 
 var mainServer = http.createServer(function (request, response) {
     if (request.url == '/'){
@@ -93,8 +98,6 @@ var mainServer = http.createServer(function (request, response) {
     }
 });
 
-mainServer.listen( port );
-
-console.log ( "Listening on port " + port );
-
-
+app.listen(port, () => {
+    console.log ( "Listening on port " + port );
+}
