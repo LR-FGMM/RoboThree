@@ -1,4 +1,4 @@
-var host = '127.0.0.1:8080';
+var host = '';
 //var host = '192.168.1.12:9080';
 //var host = 'silent-robot-304412.rj.r.appspot.com';
 var simulationDefaults = {
@@ -7,7 +7,7 @@ var simulationDefaults = {
         },
     robotsManagers: {
         main: {
-            url: host + "/update",
+            url:"/update",
             failureColor: 0xffaaaa,
             robots: [
                 {

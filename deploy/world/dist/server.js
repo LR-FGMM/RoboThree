@@ -69,3 +69,5 @@ const worker = setupWorker(
         })
     })
 )
+
+worker.start();
