@@ -6,7 +6,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "extend": "^3.0.2",
-    "http": "0.0.1-security"
+    "http": "0.0.1-security",
+    "miragejs": "^0.1.41",
+    "open": "^7.4.0"
   },
   "devDependencies": {},
   "scripts": {
