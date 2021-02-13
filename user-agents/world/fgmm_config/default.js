@@ -29,7 +29,7 @@ var simulationDefaults = {
     renderer: {
         antialias: true,
         backgroundColor: 0xfac94e,
-        shadows: false, 
+        shadows: true, 
     },
     mainCamera: {
         fov: 60,
@@ -63,7 +63,7 @@ var simulationDefaults = {
             },
             leftBorder: {
                 sizeX: 4,
-                sizeY: 100,
+                sizeY: 4,
                 sizeZ: 256,
                 position: new THREE.Vector3( -130, 2, 0 ),
                 color: 0xE8AE8A
@@ -88,7 +88,7 @@ var simulationDefaults = {
                 sizeZ: 4,
                 position: new THREE.Vector3( 0, 2, 130 ),
                 color: 0xE8AE8A
-            },/*
+            },
             wall_1: {  
                 sizeX: 160,
                 sizeY: 16,
@@ -121,9 +121,9 @@ var simulationDefaults = {
                 position: new THREE.Vector3( -2, 8, 80 ), 
                 color: 0xFFD891,
                 opacity: 0.4
-            }*/
-        }
+     }
     }
+   }
     
 }
 

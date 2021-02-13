@@ -135,23 +135,6 @@ var guiFactory = function ( simulator ) {
                 }
                 manager.add(controls, property);
                 
-                property = 'move: ' + robot.id;
-                controls[property] = function () {
-                    robot.move ( new THREE.Vector3 ( 0, 3.5, 0 ), false );
-                }
-                manager.add(controls, property);
-
-                property = 'rotate left: ' + robot.id;
-                controls[property] = function () {
-                    robot.rotateOnAxis ( new THREE.Vector3 ( 0, 1, 0 ), 5 * Math.PI/180 );
-                }
-                manager.add(controls, property);
-
-                property = 'rotate right: ' + robot.id;
-                controls[property] = function () {
-                    robot.rotateOnAxis ( new THREE.Vector3 ( 0, 1, 0 ), -5 * Math.PI/180 );
-                }
-                manager.add(controls, property);
 
                 property = 'move +yaw'
                 controls[property] = function () {
@@ -214,15 +197,7 @@ var guiFactory = function ( simulator ) {
         gui.userData.managersSubfolders.push ( manager );
     });
     
-    gui.add(controls, 'selectedCamera', gui.userData.cameras).onChange (controls.selectCamera);
-    gui.add(controls, 'takeScreenshot');
     
-    var debug = gui.addFolder("Debug");
-    debug.add(controls, 'simulate');
-    debug.add(controls, 'enableAltCamera');
-    debug.add(controls, 'showAxis');
-    debug.add(controls, 'showDebugText');
-    debug.open();
 
     const loader = new THREE.STLLoader();
 
