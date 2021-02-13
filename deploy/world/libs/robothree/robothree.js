@@ -514,9 +514,9 @@ var Simulator = function ( defaults ) {
      * Loops on the robots' managers, calling the update() method for each of them.
      */
     this.onUpdate = function onUpdate() {
-        $.each ( this.robotsManagers, function ( id, robotManager ) {
-            robotManager.update();
-        });
+        //$.each ( this.robotsManagers, function ( id, robotManager ) {
+        //    robotManager.update();
+        //});
         
         /*
         if ( this.hasOwnProperty('checkedSphere') ) {

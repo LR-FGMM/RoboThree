@@ -1,13 +1,13 @@
-//var host = '127.0.0.1:9080';
+var host = '';
 //var host = '192.168.1.12:9080';
-var host = 'silent-robot-304412.rj.r.appspot.com';
+//var host = 'silent-robot-304412.rj.r.appspot.com';
 var simulationDefaults = {
     stats: {
         mode: 0 // 0: fps, 1: ms, 2: mb (see http://github.com/mrdoob/stats.js)
         },
     robotsManagers: {
         main: {
-            url: "http://" + host + "/update",
+            url:"/update",
             failureColor: 0xffaaaa,
             robots: [
                 {
