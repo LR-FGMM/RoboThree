@@ -434,7 +434,9 @@ var Simulator = function ( defaults ) {
     this.initRenderer = function initRenderer ( options ) {
         var values = $.extend ( {}, this.defaults.renderer, options );
         this.renderer = new THREE.WebGLRenderer( {antialias: values.antialias, preserveDrawingBuffer: true, alpha: true } );
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        //this.renderer.setSize(window.innerWidth, window.innerHeight);
+        var container = document.getElementById('viewport');
+        this.renderer.setSize($(container).width(), $(container).height());
         this.renderer.setClearColor( values.backgroundColor, 1 );
         this.renderer.shadowMap.enabled = values.shadows;
         $('#viewport').append(this.renderer.domElement);
@@ -472,6 +474,7 @@ var Simulator = function ( defaults ) {
         this.renderStats.domElement.style.top = '1px';
         this.renderStats.domElement.style.left = '1px';
         this.renderStats.domElement.style.zIndex = 100;
+
         $('#viewport').append(this.renderStats.domElement);
         return this;
     };

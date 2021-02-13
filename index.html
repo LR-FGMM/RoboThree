@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>compilador</title>
+  
+  <script type="text/javascript" src="css/dummy.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/result-light.css">
+
+    <link rel="stylesheet" type="text/css" href="css/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="css/lint.css">
+    <link rel="stylesheet" href="css/dracula.css">
+
+
+
+
+
+      <script type="text/javascript" src="js/codemirror.js"></script>
+      <script type="text/javascript" src="js/javascript.js"></script>
+      <script type="text/javascript" src="js/css.js"></script>
+      <script type="text/javascript" src="js/htmlmixed.js"></script>
+      <script type="text/javascript" src="js/xml.js"></script>
+      <script type="text/javascript" src="js/lint.js"></script>
+      <script type="text/javascript" src="js/javascript-lint.js"></script>
+      <script type="text/javascript" src="js/json-lint.js"></script>
+      <script type="text/javascript" src="js/css-lint.js"></script>
+      <script type="text/javascript" src="js/html-lint.js"></script>
+      <script type="text/javascript" src="js/jshint.js"></script>
+      <script type="text/javascript" src="js/jsonlint.js"></script>
+      <script type="text/javascript" src="https://csslint.net/js/csslint.js"></script>
+      <script type="text/javascript" src="js/closetag.js"></script>
+      <script type="text/javascript" src="js/matchbrackets.js"></script>
+      <script type="text/javascript" src="js/active-line.js"></script>
+      <script type="text/javascript" src="js/foldcode.js"></script>
+      <script type="text/javascript" src="js/foldgutter.js"></script>
+      <script type="text/javascript" src="js/brace-fold.js"></script>
+      <script type="text/javascript" src="js/xml-fold.js"></script>
+      <script type="text/javascript" src="js/comment-fold.js"></script>
+      
+
+  <style id="compiled-css" type="text/css"></style>
+
+  <script id="insert"></script>
+
+
+<style type="text/css"></style></head>
+
+
+<body>
+
+<form id="preview-form" method="post" action="index1.php">
+
+<textarea id="code-js" name="code-js" style="display: none;">
+</textarea>
+
+<input type="submit" name="preview-form-submit" id="preview-form-submit" value="ingresa" ></input>
+
+</form>
+
+
+<script type="text/javascript">//<![CDATA[
+
+
+
+var editor = CodeMirror.fromTextArea(document.getElementById("code-js"), {
+  lineNumbers: true,
+  mode: "javascript",
+  theme:"dracula",
+  gutters: ["CodeMirror-lint-markers"],
+  lint: true
+});
+
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "bsh76f3p"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+
+
+</body></html>

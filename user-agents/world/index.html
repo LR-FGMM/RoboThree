@@ -4,12 +4,6 @@
 
 <head>
     <style>
-        body {
-            /* set margin to 0 and overflow to hidden, to go fullscreen */
-            margin: 0;
-            overflow: hidden;
-            background-color: #000000;
-        }
         #infobox {
             color: white;
             font-family: Arial, sans-serif;
@@ -28,6 +22,44 @@
 
     <title>RoboThree</title>
     <meta charset="utf-8" />
+
+
+    <script type="text/javascript" src="css/dummy.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/result-light.css">
+
+    <link rel="stylesheet" type="text/css" href="css/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="css/lint.css">
+    <link rel="stylesheet" href="css/dracula.css">
+
+
+
+
+
+    <script type="text/javascript" src="js/codemirror.js"></script>
+    <script type="text/javascript" src="js/javascript.js"></script>
+    <script type="text/javascript" src="js/css.js"></script>
+    <script type="text/javascript" src="js/htmlmixed.js"></script>
+    <script type="text/javascript" src="js/xml.js"></script>
+    <script type="text/javascript" src="js/lint.js"></script>
+    <script type="text/javascript" src="js/javascript-lint.js"></script>
+    <script type="text/javascript" src="js/json-lint.js"></script>
+    <script type="text/javascript" src="js/css-lint.js"></script>
+    <script type="text/javascript" src="js/html-lint.js"></script>
+    <script type="text/javascript" src="js/jshint.js"></script>
+    <script type="text/javascript" src="js/jsonlint.js"></script>
+    <script type="text/javascript" src="https://csslint.net/js/csslint.js"></script>
+    <script type="text/javascript" src="js/closetag.js"></script>
+    <script type="text/javascript" src="js/matchbrackets.js"></script>
+    <script type="text/javascript" src="js/active-line.js"></script>
+    <script type="text/javascript" src="js/foldcode.js"></script>
+    <script type="text/javascript" src="js/foldgutter.js"></script>
+    <script type="text/javascript" src="js/brace-fold.js"></script>
+    <script type="text/javascript" src="js/xml-fold.js"></script>
+    <script type="text/javascript" src="js/comment-fold.js"></script>
+    
+
+    <style id="compiled-css" type="text/css"></style>
 
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/icons/favicon-96x96.png">
@@ -56,7 +88,23 @@
 </head>
 
 <body>
-<div id="viewport"></div>
-</body>
 
+<div id="viewport" style="width: 600px; height: 400px;">
+
+</div>
+
+<div style="width: 80%; float:right">
+    <form id="preview-form" method="post" action="index1.php">
+
+        <textarea id="code-js" name="code-js" style="display: none;">
+        </textarea>
+        
+        <input type="submit" name="preview-form-submit" id="preview-form-submit" value="ingresa" ></input>
+        
+     </form>
+</div>
+    
+
+
+</body>
 </html>
