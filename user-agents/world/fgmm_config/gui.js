@@ -32,32 +32,32 @@ var guiFactory = function ( simulator ) {
         */
         
         
-        this.lightPositionX = simulator.light.position.x;
-        this.lightPositionY = simulator.light.position.y;
-        this.lightPositionZ = simulator.light.position.z;
-        this.lightIntensity = simulator.light.intensity;
+        this.X = simulator.light.position.x;
+        this.Y = simulator.light.position.y;
+        this.Z = simulator.light.position.z;
+        this.Intensidad = simulator.light.intensity;
 
         this.changeLight = function changeLight() {
-            simulator.light.position.set( controls.lightPositionX, controls.lightPositionY, controls.lightPositionZ );
-            simulator.light.intensity = controls.lightIntensity;
+            simulator.light.position.set( controls.X, controls.Y, controls.Z );
+            simulator.light.intensity = controls.Intensidad;
         };
  
-        this.meshColor = "#0000dd";
+        this.Color = "#0000dd";
         
-        this.addBoxMesh = function () {
+        this.Caja = function () {
             var cube = new Physijs.BoxMesh(
                 new THREE.BoxGeometry(16, 10, 14),
-                getMaterial( this.meshColor ),
+                getMaterial( this.Color ),
                 100
             );
             setPosAndShade(cube);
             simulator.scene.add(cube, 2);
         };
         
-        this.addSphereMesh = function () {
+        this.Esfera = function () {
             var sphere = new THREE.Mesh(
                 new THREE.SphereGeometry(6, 32),
-                getMaterial( this.meshColor )
+                getMaterial( this.Color )
             );
             setPosAndShade(sphere);
             simulator.scene.add(sphere);
@@ -68,7 +68,7 @@ var guiFactory = function ( simulator ) {
         var ctrls = this; // a reference
 
         this.selectCamera = function() {
-            console.log ( 'camera: ' );
+            console.log ( 'camara: ' );
             console.log ( ctrls.selectedCamera );
             simulator.usedCamera = simulator.availableCameras[ctrls.selectedCamera];
         }
@@ -88,7 +88,7 @@ var guiFactory = function ( simulator ) {
 
     }
     
-    var gui = new dat.GUI();
+    var gui = new dat.GUI({ autoPlace: false } );
     
     //gui.remember ( controls );
     
@@ -98,7 +98,7 @@ var guiFactory = function ( simulator ) {
         $.each ( gui.userData.managersSubfolders, function ( index, manager ) {
             
             $.each ( manager.userData.robotsManager.robots, function ( index, robot ) {
-                var property = 'buildRobot: '+robot.id;
+                var property = 'Agregar robot: '+robot.id;
                 controls[property] = function () {
                     if ( robot.build(l1,l2,l3,l4) ) {
                         if ( robot.hasCamera() ) {
@@ -136,25 +136,25 @@ var guiFactory = function ( simulator ) {
                 manager.add(controls, property);
                 
 
-                property = 'move +yaw'
+                property = 'rotar +yaw'
                 controls[property] = function () {
                     robot.updateJointsAngles(50,0);
                 }
                 manager.add(controls, property);
 
-                property = 'move -yaw'
+                property = 'rotar -yaw'
                 controls[property] = function () {
                     robot.updateJointsAngles(-50,0);
                 }
                 manager.add(controls, property);
 
-                property = 'move +pitch'
+                property = 'rotar +pitch'
                 controls[property] = function () {
                     robot.updateJointsAngles(0,25);
                 }
                 manager.add(controls, property);
 
-                property = 'move -pitch'
+                property = 'rotar -pitch'
                 controls[property] = function () {
                     robot.updateJointsAngles(0,-25);
                 }
@@ -174,19 +174,19 @@ var guiFactory = function ( simulator ) {
     gui.userData.cameras['main'] = simulator.mainCamera.uuid;
     
     
-    var light = gui.addFolder("Light");
-    light.add(controls, 'lightPositionX', -400, 400).onChange(controls.changeLight);
-    light.add(controls, 'lightPositionY', 0, 400).onChange(controls.changeLight);
-    light.add(controls, 'lightPositionZ', -400, 400).onChange(controls.changeLight);
-    light.add(controls, 'lightIntensity', 0, 5).onChange(controls.changeLight);
+    var light = gui.addFolder("Luz principal");
+    light.add(controls, 'X', -400, 400).onChange(controls.changeLight);
+    light.add(controls, 'Y', 0, 400).onChange(controls.changeLight);
+    light.add(controls, 'Z', -400, 400).onChange(controls.changeLight);
+    light.add(controls, 'Intensidad', 0, 5).onChange(controls.changeLight);
 
-    var meshes = gui.addFolder("Meshes");
+    var meshes = gui.addFolder("Agregar figuras");
     
-    meshes.addColor(controls, 'meshColor');
-    meshes.add(controls, 'addBoxMesh');
-    meshes.add(controls, 'addSphereMesh');
+    meshes.addColor(controls, 'Color');
+    meshes.add(controls, 'Caja');
+    meshes.add(controls, 'Esfera');
     
-    var managers = gui.addFolder("Managers");
+    var managers = gui.addFolder("Agregar robot");
 
     gui.userData.managersSubfolders = [];
 

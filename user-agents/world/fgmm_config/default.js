@@ -6,7 +6,7 @@ var simulationDefaults = {
         mode: 0 // 0: fps, 1: ms, 2: mb (see http://github.com/mrdoob/stats.js)
         },
     robotsManagers: {
-        main: {
+        controlador: {
             url:"/update",
             failureColor: 0xffaaaa,
             robots: [

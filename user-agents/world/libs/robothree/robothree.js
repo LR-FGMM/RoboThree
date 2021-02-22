@@ -623,6 +623,9 @@ var Simulator = function ( defaults ) {
      */
     this.addGUI = function addGUI () {
         this.gui = guiFactory ( this );
+        //this.gui.domElement.style.zIndex = 200;
+        var customContainer = document.getElementById('gui-container');
+        customContainer.appendChild(this.gui.domElement);
         return this;
     };
     

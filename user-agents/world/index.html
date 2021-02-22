@@ -4,6 +4,11 @@
 
 <head>
     <style>
+        #left {
+            position:relative;
+            left: 600px;
+        
+        }
         #infobox {
             color: white;
             font-family: Arial, sans-serif;
@@ -16,6 +21,13 @@
         #infobox a {
             text-decoration: none;
             color: white;
+        }
+
+        #gui-container {
+            position: absolute;
+            top: 5px;
+            left: 350px;
+            z-index: 10;
         }
         
     </style>
@@ -89,20 +101,14 @@
 
 <body>
 
-<div id="viewport" style="width: 600px; height: 400px;">
-
+<div id="left">
+    <div id="viewport" style="max-width: 100%; max-height: 100%;"></div>
+    <div id="gui-container" ></div>
+</div>
+<div id="pruebita">
+    
 </div>
 
-<div style="width: 80%; float:right">
-    <form id="preview-form" method="post" action="index1.php">
-
-        <textarea id="code-js" name="code-js" style="display: none;">
-        </textarea>
-        
-        <input type="submit" name="preview-form-submit" id="preview-form-submit" value="ingresa" ></input>
-        
-     </form>
-</div>
     
 
 
