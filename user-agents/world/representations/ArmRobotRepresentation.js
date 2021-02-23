@@ -7,6 +7,7 @@ $.extend ( ArmRobotRepresentation.prototype, RobotRepresentation.prototype );
 ArmRobotRepresentation.prototype.build = function build (l1,l2,l3,l4) {
     
     this.tasks = [];
+    this.active_task = {'class':'none','value':0}
     
     this.wait_tasks = [];
     this.wait_task = 0;
@@ -67,8 +68,6 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
 
     this.l1.rotation.set(Math.PI / 2,0,0);
 
-    console.log(this.l1);
-
     //var material = new THREE.MeshBasicMaterial({color:'red'});
 
     //this.l2 = new THREE.Mesh( new THREE.BoxGeometry(10, 20, 10), material );
@@ -79,8 +78,6 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
     //this.l2.scale.set(0.1,0.1,0.1);
     this.l2.name = 'l2';
     this.l2.rotation.set(Math.PI,0,0);
-
-    console.log(this.l2);
 
     this.j1 = new THREE.Object3D();
     this.j1.translateZ(-10);
@@ -220,19 +217,25 @@ ArmRobotRepresentation.prototype.updateYawAngle = function updateYawAngle (angle
 
 ArmRobotRepresentation.prototype.moverYaw = function moverYaw(angulo){
     var new_task = {'class':'yaw','value':angulo};
-    this.tasks.push(angulo);
+    this.tasks.push(new_task);
     return this;
 }
 
 ArmRobotRepresentation.prototype.moverPitch = function moverPitch(angulo){
     var new_task = {'class':'pitch','value':angulo};
-    this.tasks.push(angulo);
+    this.tasks.push(new_task);
     return this;
 }
 
 ArmRobotRepresentation.prototype.esperar = function esperar(tiempo){
     var new_task = {'class':'wait', 'value':tiempo};
-    this.tasks.push(tiempo);
+    this.tasks.push(new_task);
+    return this;
+}
+
+ArmRobotRepresentation.prototype.cambiarRapidezYaw = function cambiarRapidezYaw(vel){
+    var new_task = {'class':'yaw_vel','value':vel};
+    this.tasks.push(new_task);
     return this;
 }
 /**
@@ -270,6 +273,8 @@ ArmRobotRepresentation.prototype.nearZero = function nearZero (num) {
  * @param {Object} data - The data received/transmitted
  */
 ArmRobotRepresentation.prototype.update = function update ( data ) {
+
+
 
     if ( !this.isBuilt ) {
         return;
@@ -311,6 +316,30 @@ ArmRobotRepresentation.prototype.update = function update ( data ) {
     
     if (this.active_task.class == 'pitch' && this.nearZero(this.active_task.value)){
         this.active_task.class = 'none';
+    }
+
+    if (this.active_task.class == 'yaw_vel'){
+        if (this.active_task.value > this.max_vel_yaw){
+            this.yaw_vel = this.active_task.value;
+        }
+        else if (this.active_task.value < 0){
+            this.yaw_vel = 0;
+        }
+        else {
+            this.yaw_vel = this.active_task.value;
+        }
+    }
+
+    if (this.active_task.class == 'pitch_vel'){
+        if (this.active_task.value > this.max_vel_pitch){
+            this.pitch_vel = this.active_task.value;
+        }
+        else if (this.active_task.value < 0){
+            this.pitch_vel = 0;
+        }
+        else {
+            this.pitch_vel = this.active_task.value;
+        }
     }
     
 

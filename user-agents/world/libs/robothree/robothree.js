@@ -803,7 +803,7 @@ $(function () {
         simulator.axisHelper.visible = simulator.gui.userData.controls.showAxis;
         simulator.renderStats.update();
         simulator.renderDebugText();     
-        console.log("aqui tamo papi");   
+     
     };
 
     //Physijs.scripts.worker = 'libs/vendor/physijs_worker.js';
