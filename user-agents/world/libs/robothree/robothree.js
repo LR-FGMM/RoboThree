@@ -795,13 +795,15 @@ $(function () {
         }
         simulator.axisHelper.visible = simulator.gui.userData.controls.showAxis;
         simulator.renderStats.update();
-        simulator.renderDebugText();        
+        simulator.renderDebugText();     
+        console.log("aqui tamo papi");   
     };
 
     //Physijs.scripts.worker = 'libs/vendor/physijs_worker.js';
     //Physijs.scripts.ammo = 'ammo.js';
 
-    var simulator = new Simulator( simulationDefaults );
+    window.simulator = new Simulator( simulationDefaults );
+    var simulator = window.simulator;
     simulator.initSimulation();
     
     render();
