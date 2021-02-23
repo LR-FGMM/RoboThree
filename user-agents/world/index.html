@@ -5,7 +5,7 @@
 <head>
     <style>
         #left {
-            position:relative;
+            position:fixed;
             left: 600px;
         
         }
@@ -77,7 +77,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="assets/icons/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
     
-    <script defer src="libs/vendor/jquery-2.1.4.min.js"></script>
+    <script src="libs/vendor/jquery-2.1.4.min.js"></script>
     <!--script defer src="controllers/ArmRobotController.js"></script-->
     <!--script defer src="virtualizers/ArmRobotVirtualizer.js"></script-->
     <!--script defer src="dist/msw.js"></script-->
@@ -100,15 +100,46 @@
 </head>
 
 <body>
+<!--div id="prueba"></div>
 
+</div-->
 <div id="left">
     <div id="viewport" style="width: 600px; height: 600px;"></div>
-    <div id="gui-container" ></div>
-</div>
-<div id="pruebita">
-    
+    <div id="gui-container" ></div>    
 </div>
 
+<!--textarea id="w3review" name="w3review" rows="90" cols="50">
+    At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+</textarea-->
+<textarea class="input-group-addon" id="code-js" name="code-js" ></textarea>
+
+<div id="button-container">
+    <!--<button onclick id="generator" style="display:;">XML</button>-->
+    <button onclick id="run-code"> Run Code </button>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(()=>{
+      
+        $('#run-code').click(()=>{
+            console.log("me tocaron");
+            var text2 = editor.getValue();
+            eval(text2);
+            console.log(text2);   
+
+        });
+      
+    });
+    var editor = CodeMirror.fromTextArea(document.getElementById("code-js"), {
+      lineNumbers: true,
+      mode: "javascript",
+      theme:"dracula",
+      gutters: ["CodeMirror-lint-markers"],
+      lint: true
+    });
+  
+    editor.setSize(550, 600);
+</script>
     
 
 
