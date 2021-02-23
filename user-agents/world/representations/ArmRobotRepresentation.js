@@ -6,6 +6,15 @@ $.extend ( ArmRobotRepresentation.prototype, RobotRepresentation.prototype );
 
 ArmRobotRepresentation.prototype.build = function build (l1,l2,l3,l4) {
     
+    this.yaw_state = 0;
+    this.yaw_task = 0;
+    this.yaw_vel = 0.01;
+
+
+    this.pitch_state = 0 ;
+    this.pitch_task = 0;
+    this.pitch_vel = 0.01;
+
     if ( !this.isBuilt ) {
         console.log( "Building robot: " + this.id );
         this
@@ -23,6 +32,7 @@ ArmRobotRepresentation.prototype.build = function build (l1,l2,l3,l4) {
         console.log( "Already built: " + this.id );
         return false;
     }
+
 }
 
 ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
@@ -187,6 +197,29 @@ ArmRobotRepresentation.prototype.updateJointsAngles = function updateJointsAngle
     return this;
 }
 
+ArmRobotRepresentation.prototype.updatePitchAngle = function updatePitchAngle (angle){
+
+    this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),angle);
+    this.pitch_state += angle;
+    return this;
+}
+
+ArmRobotRepresentation.prototype.updateYawAngle = function updateYawAngle (angle){
+
+    this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),angle);
+    this.yaw_state += angle;
+    return this;
+}
+
+ArmRobotRepresentation.prototype.moverYaw = function moverYaw(angulo){
+    this.yaw_task = angulo - this.yaw_state;
+    return this;
+}
+
+ArmRobotRepresentation.prototype.moverPitch = function moverPitch(angulo){
+    this.pitch_task = angulo - this.pitch_state;
+    return this;
+}
 /**
  * Updates light intensity
  * @param {float} intensity - intensity of light (0 to 1)
@@ -212,6 +245,10 @@ ArmRobotRepresentation.prototype.process = function process ( ) {
     return this;
 }
 
+ArmRobotRepresentation.prototype.nearZero = function nearZero (num) {
+    return Math.abs(num) > 0.0001;
+}
+
 /**
  * Updates the data to/from the robot's behavior.
  * @override
@@ -219,21 +256,32 @@ ArmRobotRepresentation.prototype.process = function process ( ) {
  */
 ArmRobotRepresentation.prototype.update = function update ( data ) {
     
+    if (this.nearZero(this.yaw_task)) {
+        this.updateYawAngle(this.yaw_vel);
+        this.yaw_task -= this.yaw_vel;
+    }
+
+    if (this.nearZero(this.pitch_task)){
+        this.updatePitchAngle(this.pitch_vel);
+        this.pitch_task -= this.pitch_vel;
+    }
+
     if ( !this.isBuilt ) {
         return;
     }
-        
-    this.receivedData = data;
+
     
-    if ( typeof data !== 'undefined' ) {
         
-        for ( var i=0; i<this.dataPropertiesIn.length; i++ ) {
-            this.data[this.dataPropertiesIn[i]] = data[this.dataPropertiesIn[i]];
-        }
-        
-        this.process( );
-    }
+    //this.receivedData = data;
     
+    //if ( typeof data !== 'undefined' ) {
+    //    
+    //    for ( var i=0; i<this.dataPropertiesIn.length; i++ ) {
+    //        this.data[this.dataPropertiesIn[i]] = data[this.dataPropertiesIn[i]];
+    //    }
+    //    
+    //    this.process( );
+    //    }
     
     //console.log ( this.data );
     

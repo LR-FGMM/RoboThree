@@ -384,27 +384,32 @@ RobotsManager.prototype.addRobots = function () {
 RobotsManager.prototype.update = function () {
     var robots = this.robots; // a reference
     var rm = this; // a reference
-    
-    var posting = $.post( this.url, JSON.stringify( this.data ), function() {
-        // the connection started, we don't need to do anything...
-        //console.log("contacting url " + this.url);
-        })
-    .done(function(data) {
-        // the connection is done;
-        //console.log (data);
-        $.each( robots, function ( index, robot ) {
-            rm.data[robot.id] = robot.update( data[robot.id] );
-        });
-    })
-    .fail(function() {
-        //console.log(robots);
-        $.each( robots, function ( index, robot ) {
-            rm.data[robot.id] = robot.manageCommunicationFailure();
-        });
-    })
-    .always(function() {
-       //alert( "finished" );
+    $.each( robots, function ( index, robot ) {
+        robot.update(1);
     });
+    
+    
+    //var posting = $.post( this.url, JSON.stringify( this.data ), function() {
+    //    // the connection started, we don't need to do anything...
+    //    //console.log("contacting url " + this.url);
+    //    })
+    //.done(function(data) {
+    //    // the connection is done;
+    //    //console.log (data);
+    //    $.each( robots, function ( index, robot ) {
+    //        rm.data[robot.id] = robot.update( data[robot.id] );
+    //    });
+    //})
+    //.fail(function() {
+    //    //console.log(robots);
+    //    $.each( robots, function ( index, robot ) {
+    //        rm.data[robot.id] = robot.manageCommunicationFailure();
+    //    });
+    //})
+    //.always(function() {
+    //   //alert( "finished" );
+    //});
+
     return this;
 }
 
@@ -517,9 +522,11 @@ var Simulator = function ( defaults ) {
      * Loops on the robots' managers, calling the update() method for each of them.
      */
     this.onUpdate = function onUpdate() {
-        //$.each ( this.robotsManagers, function ( id, robotManager ) {
-        //    robotManager.update();
-        //});
+
+
+        $.each ( this.robotsManagers, function ( id, robotManager ) {
+            robotManager.update();
+        });
         
         /*
         if ( this.hasOwnProperty('checkedSphere') ) {
