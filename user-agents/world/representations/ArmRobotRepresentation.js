@@ -107,7 +107,7 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
     this.l4.name = 'l4'
 
     this.spotLight = new THREE.SpotLight( 0xffffff,5 );
-    this.spotLight.position.set( 0, 0, 150 );
+    this.spotLight.position.set( 0, 0, 350 );
     
     //this.spotLight.castShadow = true;
     
@@ -118,7 +118,10 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
     //this.spotLight.decay = 2;
     this.spotLight.distance = 0;
 
+    
     this.spotLight.target.position.set(0,0,600);
+
+    this.lightHelper = new THREE.SpotLightHelper( this.spotLight );
 
     this.l1.add(this.j1);
     this.j1.add(this.l2);
@@ -126,7 +129,14 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
     this.j2.add(this.l3);
     this.l3.add(this.l4);
     this.l4.add(this.spotLight);
+    //his.scene.add(this.spotLight.target)
+
     this.l4.add(this.spotLight.target);
+    //this.scene.add(this.spotLight);
+    //this.scene.add(this.spotLight.target);
+    //this.l4.add(this.lightHelper);
+    //this.l4.add(this.lightHelper);
+    this.scene.add(this.lightHelper);
     //this.l1.add(this.l2);
     // this.j1 = new Physijs.BoxMesh(
     //     new THREE.BoxGeometry(0,0,0),

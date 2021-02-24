@@ -690,10 +690,11 @@ var Simulator = function ( defaults ) {
                 $.each( values.pieces, function ( name, piece ) {
                     geometry = new THREE.BoxGeometry( piece.sizeX, piece.sizeY, piece.sizeZ );
                     if ( typeof piece.color === 'undefined' ) {
-                        mesh = new Physijs.BoxMesh( geometry, texturedPjsMaterial, 0 );
+                        var material = new THREE.MeshPhongMaterial( { color: 0x808080, dithering: true } );
+                        mesh = new THREE.Mesh( geometry, material);
                     }
                     else {
-                        mesh = new Physijs.BoxMesh( geometry, coloredPjsMaterial, 0 );
+                        mesh = new THREE.Mesh( geometry, coloredPjsMaterial);
                         mesh.material = mesh.material.clone();
                         mesh.material.color.setHex( piece.color );
                         if ( typeof piece.opacity !== 'undefined' ) {
