@@ -442,7 +442,7 @@ var Simulator = function ( defaults ) {
         //this.renderer.setSize(window.innerWidth, window.innerHeight);
         var container = document.getElementById('viewport');
         this.renderer.setSize($(container).width(), $(container).height());
-        this.renderer.setClearColor( values.backgroundColor, 1 );
+        //this.renderer.setClearColor( values.backgroundColor, 1 );
         this.renderer.shadowMap.enabled = values.shadows;
         $('#viewport').append(this.renderer.domElement);
         return this;
@@ -664,28 +664,28 @@ var Simulator = function ( defaults ) {
             // Function called when the resource is loaded
             function ( texture ) {
 
-                simulator.bottom.canvasElement = $('<canvas />');
-                simulator.bottom.canvasElement.attr('id', 'mycanvas');
-                simulator.bottom.canvas = simulator.bottom.canvasElement[0];
-                simulator.bottom.canvas.width = texture.image.width;
-                simulator.bottom.canvas.height = texture.image.height;
-                simulator.bottom.canvas.getContext( '2d' ).drawImage( texture.image, 0, 0, texture.image.width, texture.image.height );
+                //simulator.bottom.canvasElement = $('<canvas />');
+                //simulator.bottom.canvasElement.attr('id', 'mycanvas');
+                //simulator.bottom.canvas = simulator.bottom.canvasElement[0];
+                //simulator.bottom.canvas.width = texture.image.width;
+                //simulator.bottom.canvas.height = texture.image.height;
+                //simulator.bottom.canvas.getContext( '2d' ).drawImage( texture.image, 0, 0, texture.image.width, texture.image.height );
     
                 var mesh, geometry;
                 
-                simulator.bottom.canvasMap = new THREE.Texture( simulator.bottom.canvas );
-                simulator.bottom.canvasMap.needsUpdate = true;
+                //simulator.bottom.canvasMap = new THREE.Texture( simulator.bottom.canvas );
+                //simulator.bottom.canvasMap.needsUpdate = true;
                 
-                var texturedMaterial = new THREE.MeshBasicMaterial( { map: simulator.bottom.canvasMap, overdraw: 0.5 } );
+                //var texturedMaterial = new THREE.MeshBasicMaterial( { map: simulator.bottom.canvasMap, overdraw: 0.5 } );
 
-                var texturedPjsMaterial = createPhysijsMaterial( texturedMaterial );
+                //var texturedPjsMaterial = createPhysijsMaterial( texturedMaterial );
                 
                 var coloredMaterial = new THREE.MeshLambertMaterial ( {
                     color: 0xffffff,
                     opacity: 1,
                     transparent: false,
                 });
-                var coloredPjsMaterial = createPhysijsMaterial( coloredMaterial );
+                //var coloredPjsMaterial = createPhysijsMaterial( coloredMaterial );
                 
                 $.each( values.pieces, function ( name, piece ) {
                     geometry = new THREE.BoxGeometry( piece.sizeX, piece.sizeY, piece.sizeZ );

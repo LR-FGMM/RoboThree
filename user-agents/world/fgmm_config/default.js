@@ -28,7 +28,6 @@ var simulationDefaults = {
     },
     renderer: {
         antialias: true,
-        backgroundColor: 0xfac94e,
         shadows: true, 
     },
     mainCamera: {
