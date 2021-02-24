@@ -16,12 +16,14 @@ ArmRobotRepresentation.prototype.build = function build (l1,l2,l3,l4) {
     this.yaw_task = 0;
     this.yaw_vel = 0.01;
     this.yaw_tasks = [];
+    this.max_vel_yaw = 1;
 
 
     this.pitch_state = 0 ;
     this.pitch_task = 0;
     this.pitch_vel = 0.01;
     this.pitch_tasks = [];
+    this.max_vel_pitch = 1;
 
     if ( !this.isBuilt ) {
         console.log( "Building robot: " + this.id );
@@ -215,6 +217,11 @@ ArmRobotRepresentation.prototype.updateYawAngle = function updateYawAngle (angle
     return this;
 }
 
+ArmRobotRepresentation.prototype._addTask = function _addTask(a,value){
+    var new_task = {'class':a,'value':value};
+    this.tasks.push(new_task);
+    return this;
+}
 ArmRobotRepresentation.prototype.moverYaw = function moverYaw(angulo){
     var new_task = {'class':'yaw','value':angulo};
     this.tasks.push(new_task);
@@ -237,6 +244,10 @@ ArmRobotRepresentation.prototype.cambiarRapidezYaw = function cambiarRapidezYaw(
     var new_task = {'class':'yaw_vel','value':vel};
     this.tasks.push(new_task);
     return this;
+}
+
+ArmRobotRepresentation.prototype.cambiarRapidezPitch = function cambiarRapidezPitch(vel){
+    return this._addTask('pitch_vel',vel);
 }
 /**
  * Updates light intensity
@@ -320,7 +331,7 @@ ArmRobotRepresentation.prototype.update = function update ( data ) {
 
     if (this.active_task.class == 'yaw_vel'){
         if (this.active_task.value > this.max_vel_yaw){
-            this.yaw_vel = this.active_task.value;
+            this.yaw_vel = this.max_vel_yaw;
         }
         else if (this.active_task.value < 0){
             this.yaw_vel = 0;
@@ -328,11 +339,12 @@ ArmRobotRepresentation.prototype.update = function update ( data ) {
         else {
             this.yaw_vel = this.active_task.value;
         }
+        this.active_task.class = 'none';
     }
 
     if (this.active_task.class == 'pitch_vel'){
         if (this.active_task.value > this.max_vel_pitch){
-            this.pitch_vel = this.active_task.value;
+            this.pitch_vel = this.max_vel_pitch;
         }
         else if (this.active_task.value < 0){
             this.pitch_vel = 0;
@@ -340,6 +352,7 @@ ArmRobotRepresentation.prototype.update = function update ( data ) {
         else {
             this.pitch_vel = this.active_task.value;
         }
+        this.active_task.class = 'none';
     }
     
 
