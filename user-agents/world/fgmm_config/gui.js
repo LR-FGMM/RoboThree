@@ -12,7 +12,7 @@ var guiFactory = function ( simulator ) {
     function setPosAndShade(obj) {
         obj.position.set(
                 Math.random() * 100 - 50,
-                100 + Math.random()*100,
+                250 + Math.random()*100,
                 Math.random() * 100 - 50
         );
 
@@ -45,10 +45,9 @@ var guiFactory = function ( simulator ) {
         this.Color = "#0000dd";
         
         this.Caja = function () {
-            var cube = new Physijs.BoxMesh(
+            var cube = new THREE.Mesh(
                 new THREE.BoxGeometry(16, 10, 14),
                 getMaterial( this.Color ),
-                100
             );
             setPosAndShade(cube);
             simulator.scene.add(cube, 2);
@@ -175,10 +174,10 @@ var guiFactory = function ( simulator ) {
     
     
     var light = gui.addFolder("Luz principal");
-    light.add(controls, 'X', -400, 400).onChange(controls.changeLight);
-    light.add(controls, 'Y', 0, 400).onChange(controls.changeLight);
-    light.add(controls, 'Z', -400, 400).onChange(controls.changeLight);
-    light.add(controls, 'Intensidad', 0, 5).onChange(controls.changeLight);
+    light.add(controls, 'X', -800, 800).onChange(controls.changeLight);
+    light.add(controls, 'Y', 0, 800).onChange(controls.changeLight);
+    light.add(controls, 'Z', -800, 800).onChange(controls.changeLight);
+    light.add(controls, 'Intensidad', 0, 10).onChange(controls.changeLight);
 
     var meshes = gui.addFolder("Agregar figuras");
     

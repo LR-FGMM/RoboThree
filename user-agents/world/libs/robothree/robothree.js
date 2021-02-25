@@ -599,13 +599,17 @@ var Simulator = function ( defaults ) {
         
         var values = $.extend ( {}, this.defaults.light, options );
         
-        this.light = new THREE.SpotLight( values.color, values.intensity );
+        //this.light = new THREE.SpotLight( values.color, values.intensity );
+        this.light = new THREE.PointLight(values.color, values.intensity);
         this.light.position.copy( values.position );
         this.light.castShadow = true;
         //this.light.shadowMapDebug = true;
-        this.light.shadowCameraNear = values.near;
-        this.light.shadowCameraFar = values.far;
+        //this.light.shadowCameraNear = values.near;
+        //this.light.shadowCameraFar = values.far;
         this.scene.add( this.light );
+        //this.helper = new THREE.SpotLightHelper( this.light);
+        //this.scene.add(this.helper);
+
         return this;
     };
 
@@ -680,10 +684,10 @@ var Simulator = function ( defaults ) {
 
                 //var texturedPjsMaterial = createPhysijsMaterial( texturedMaterial );
                 
-                var coloredMaterial = new THREE.MeshLambertMaterial ( {
+                var coloredMaterial = new THREE.MeshPhongMaterial ( {
                     color: 0xffffff,
-                    opacity: 1,
-                    transparent: false,
+                    specular: 0x111111, 
+                    shininess: 200,
                 });
                 //var coloredPjsMaterial = createPhysijsMaterial( coloredMaterial );
                 
@@ -694,12 +698,12 @@ var Simulator = function ( defaults ) {
                         mesh = new THREE.Mesh( geometry, material);
                     }
                     else {
-                        mesh = new THREE.Mesh( geometry, coloredPjsMaterial);
+                        mesh = new THREE.Mesh( geometry, coloredMaterial);
                         mesh.material = mesh.material.clone();
                         mesh.material.color.setHex( piece.color );
-                        if ( typeof piece.opacity !== 'undefined' ) {
-                            mesh.material.opacity = piece.opacity;
-                        }
+                        //if ( typeof piece.opacity !== 'undefined' ) {
+                        //    mesh.material.opacity = piece.opacity;
+                        //}
                     };
                     if ( name == 'bottom' ) {
                         simulator.bottom.width = piece.sizeX;

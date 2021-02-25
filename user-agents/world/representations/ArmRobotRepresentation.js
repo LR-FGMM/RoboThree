@@ -106,22 +106,31 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
     this.l4.receiveShadow = true;
     this.l4.name = 'l4'
 
-    this.spotLight = new THREE.SpotLight( 0xffffff,5 );
-    this.spotLight.position.set( 0, 0, 350 );
+    this.spotLight = new THREE.SpotLight( 'blue',2 );
+    this.spotLight.position.set( 0, 0, 300 );
     
-    //this.spotLight.castShadow = true;
+    this.spotLight.castShadow = true;
+    this.spotLight.shadowCameraNear = 11;
+    this.spotLight.shadowCameraFar = 600;
     
 
     //this.spotLight.castShadow = false;
     this.spotLight.angle = 0.3;
     this.spotLight.penumbra = 0.2;
-    //this.spotLight.decay = 2;
+    this.spotLight.decay = 2;
     this.spotLight.distance = 0;
 
     
-    this.spotLight.target.position.set(0,0,600);
+    this.spotLight.target.position.set(0,0,301);
 
-    this.lightHelper = new THREE.SpotLightHelper( this.spotLight );
+    this.lightHelper = new THREE.SpotLightHelper( this.spotLight ,5);
+
+    var geo_cone = new THREE.CylinderGeometry(0.0, 50, 500, 32*2, 20, true);
+    var vol_mat = new THREEx.VolumetricSpotLightMaterial(this.spotLight);
+    var l_mesh = new THREE.Mesh(geo_cone, vol_mat);
+
+    vol_mat.uniforms.lightColor.value.set('blue');
+
 
     this.l1.add(this.j1);
     this.j1.add(this.l2);
@@ -136,7 +145,14 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
     //this.scene.add(this.spotLight.target);
     //this.l4.add(this.lightHelper);
     //this.l4.add(this.lightHelper);
-    this.scene.add(this.lightHelper);
+    //this.scene.add(this.lightHelper);
+    this.l4.add(l_mesh);
+
+    this.scene.traverse(object => {
+        if(object.type === 'Mesh') object.material.needsUpdate = true;
+    });
+
+
     //this.l1.add(this.l2);
     // this.j1 = new Physijs.BoxMesh(
     //     new THREE.BoxGeometry(0,0,0),
