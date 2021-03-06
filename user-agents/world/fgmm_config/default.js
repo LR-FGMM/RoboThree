@@ -1,6 +1,8 @@
 var host = '';
 //var host = '192.168.1.12:9080';
 //var host = 'silent-robot-304412.rj.r.appspot.com';
+var wall_size = 1000;
+var wall_height = 500;
 var simulationDefaults = {
     stats: {
         mode: 0 // 0: fps, 1: ms, 2: mb (see http://github.com/mrdoob/stats.js)
@@ -34,7 +36,7 @@ var simulationDefaults = {
         fov: 60,
         aspect: 1,
         near: 1,
-        far: 1000,
+        far: 5000,
         position: new THREE.Vector3 ( 0, 150, 100 ),
         lookAt: new THREE.Vector3( 0, 0, 0 )
     },
@@ -68,23 +70,23 @@ var simulationDefaults = {
             }, */
             leftBorder: {
                 sizeX: 4,
-                sizeY: 200,
+                sizeY: wall_height,
                 sizeZ: 600,
-                position: new THREE.Vector3( -300, 100, 0 ),
+                position: new THREE.Vector3( -300, wall_height/2, 0 ),
                 color: 0xE8AE8A
             },
             rightBorder: {
                 sizeX: 4,
-                sizeY: 200,
+                sizeY: wall_height,
                 sizeZ: 600,
-                position: new THREE.Vector3( 300, 100, 0 ),
+                position: new THREE.Vector3( 300, wall_height/2, 0 ),
                 color: 0xE8AE8A
             },
             topBorder: {
                 sizeX: 600,
-                sizeY: 200,
+                sizeY: wall_height,
                 sizeZ: 4,
-                position: new THREE.Vector3( 0, 100, -300 ),
+                position: new THREE.Vector3( 0, wall_height/2, -300 ),
                 color: 0xE8AE8A
             },
             /*bottomBorder: {
