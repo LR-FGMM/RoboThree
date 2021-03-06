@@ -97,68 +97,67 @@ var guiFactory = function ( simulator ) {
         $.each ( gui.userData.managersSubfolders, function ( index, manager ) {
             
             $.each ( manager.userData.robotsManager.robots, function ( index, robot ) {
-                var property = 'Agregar robot: '+robot.id;
-                controls[property] = function () {
-                    if ( robot.build(l1,l2,l3,l4) ) {
-                        if ( robot.hasCamera() ) {
-                            gui.userData.cameras[robot.id] = robot.camera.uuid;
+                // var property = 'Agregar robot: '+robot.id;
+                // controls[property] = function () {
+                //     if ( robot.build(l1,l2,l3,l4) ) {
+                //         if ( robot.hasCamera() ) {
+                //             gui.userData.cameras[robot.id] = robot.camera.uuid;
                             
-                            for (var i in gui.__controllers) {
-                                // gui.__controllers[i].updateDisplay(); // does not update the list shown
+                //             for (var i in gui.__controllers) {
+                //                 // gui.__controllers[i].updateDisplay(); // does not update the list shown
                                 
-                                if ( gui.__controllers[i].property == 'selectedCamera' ) {
+                //                 if ( gui.__controllers[i].property == 'selectedCamera' ) {
                                     
-                                    var option, t, att;
-                                    for ( var j in gui.userData.cameras ) {
-                                        // if the camera is not in the list of options, add it
-                                        if ( $("option[value='" + gui.userData.cameras[j] + "']").length === 0 ) {
-                                            option = document.createElement ( 'option' );
-                                            t = window.document.createTextNode ( j );
-                                            option.appendChild ( t );
-                                            att = document.createAttribute("value");
-                                            att.value = gui.userData.cameras[j];
-                                            option.setAttributeNode(att);
-                                            gui.__controllers[i].__select.appendChild ( option );
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                //                     var option, t, att;
+                //                     for ( var j in gui.userData.cameras ) {
+                //                         // if the camera is not in the list of options, add it
+                //                         if ( $("option[value='" + gui.userData.cameras[j] + "']").length === 0 ) {
+                //                             option = document.createElement ( 'option' );
+                //                             t = window.document.createTextNode ( j );
+                //                             option.appendChild ( t );
+                //                             att = document.createAttribute("value");
+                //                             att.value = gui.userData.cameras[j];
+                //                             option.setAttributeNode(att);
+                //                             gui.__controllers[i].__select.appendChild ( option );
+                //                         }
+                //                     }
+                //                 }
+                //             }
+                //         }
                                     
-                        if ( typeof robot.initialValues !== 'undefined' ) {
-                            if ( typeof robot.initialValues.position !== 'undefined' ) {
-                                robot.move ( robot.initialValues.position, false );
-                            }
-                        }
-                    }
-                }
-                manager.add(controls, property);
+                //         if ( typeof robot.initialValues !== 'undefined' ) {
+                //             if ( typeof robot.initialValues.position !== 'undefined' ) {
+                //                 robot.move ( robot.initialValues.position, false );
+                //             }
+                //         }
+                //     }
+                // }
+                // manager.add(controls, property);
                 
 
                 property = 'rotar +yaw'
                 controls[property] = function () {
-                    robot.updateJointsAngles(50,0);
+                    robot.updateYawAngle(0.25);
                 }
                 manager.add(controls, property);
 
                 property = 'rotar -yaw'
                 controls[property] = function () {
-                    robot.updateJointsAngles(-50,0);
+                    robot.updateYawAngle(-0.25);
                 }
                 manager.add(controls, property);
 
                 property = 'rotar +pitch'
                 controls[property] = function () {
-                    robot.updateJointsAngles(0,25);
+                    robot.updatePitchAngle(0.25);
                 }
                 manager.add(controls, property);
 
                 property = 'rotar -pitch'
                 controls[property] = function () {
-                    robot.updateJointsAngles(0,-25);
+                    robot.updatePitchAngle(-0.25);
                 }
                 manager.add(controls, property);
-
                 
             });
         });
@@ -173,19 +172,19 @@ var guiFactory = function ( simulator ) {
     gui.userData.cameras['main'] = simulator.mainCamera.uuid;
     
     
-    var light = gui.addFolder("Luz principal");
-    light.add(controls, 'X', -800, 800).onChange(controls.changeLight);
-    light.add(controls, 'Y', 0, 800).onChange(controls.changeLight);
-    light.add(controls, 'Z', -800, 800).onChange(controls.changeLight);
-    light.add(controls, 'Intensidad', 0, 10).onChange(controls.changeLight);
+    //var light = gui.addFolder("Luz principal");
+    //light.add(controls, 'X', -800, 800).onChange(controls.changeLight);
+    //light.add(controls, 'Y', 0, 800).onChange(controls.changeLight);
+    //light.add(controls, 'Z', -800, 800).onChange(controls.changeLight);
+    //light.add(controls, 'Intensidad', 0, 10).onChange(controls.changeLight);
 
-    var meshes = gui.addFolder("Agregar figuras");
+    //var meshes = gui.addFolder("Agregar figuras");
     
-    meshes.addColor(controls, 'Color');
-    meshes.add(controls, 'Caja');
-    meshes.add(controls, 'Esfera');
+    //meshes.addColor(controls, 'Color');
+    //meshes.add(controls, 'Caja');
+    //meshes.add(controls, 'Esfera');
     
-    var managers = gui.addFolder("Agregar robot");
+    var managers = gui.addFolder("Robots");
 
     gui.userData.managersSubfolders = [];
 
@@ -246,8 +245,10 @@ var guiFactory = function ( simulator ) {
         if (l1 && l2 && l3 && l4) {
           console.log('done');
           console.log ( "adding actual robots..." );
-          setTimeout ( addRobotsToGui, 5000, simulator, gui,l1 ,l2,l3,l4);
+          setTimeout ( addRobotsToGui, 500, simulator, gui,l1 ,l2,l3,l4);
           console.log(gui.userData);
+          var dmx = window.simulator.getRobotById("arm");
+          dmx.build(l1,l2,l3,l4);
         }
       }
 

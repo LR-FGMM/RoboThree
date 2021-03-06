@@ -25,6 +25,10 @@ ArmRobotRepresentation.prototype.build = function build (l1,l2,l3,l4) {
     this.pitch_tasks = [];
     this.max_vel_pitch = 1;
 
+    this.light_intensity = 1;
+    this.max_light_intensity = 5;
+    this.light_color = "white";
+
     if ( !this.isBuilt ) {
         console.log( "Building robot: " + this.id );
         this
@@ -106,7 +110,7 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
     this.l4.receiveShadow = true;
     this.l4.name = 'l4'
 
-    this.spotLight = new THREE.SpotLight( 'blue',2 );
+    this.spotLight = new THREE.SpotLight( 'blue',this.light_intensity);
     this.spotLight.position.set( 0, 0, 300 );
     
     this.spotLight.castShadow = true;
@@ -126,7 +130,7 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
     this.lightHelper = new THREE.SpotLightHelper( this.spotLight ,5);
 
     var geo_cone = new THREE.CylinderGeometry(0.0, 50, 500, 32*2, 20, true);
-    var vol_mat = new THREEx.VolumetricSpotLightMaterial(this.spotLight);
+    var vol_mat = new THREEx.VolumetricSpotLightMaterial();
     var l_mesh = new THREE.Mesh(geo_cone, vol_mat);
 
     vol_mat.uniforms.lightColor.value.set('blue');
@@ -281,8 +285,23 @@ ArmRobotRepresentation.prototype.cambiarRapidezPitch = function cambiarRapidezPi
  * @return {ArmRobotRepresentation} - The Robot
  */
 ArmRobotRepresentation.prototype.updateLightIntensity = function updateLightIntensity (intensity){
+    this.spotLight.intensity = intensity;
     return this;
 }
+
+ArmRobotRepresentation.prototype.cambiarIntensidadLuz = function cambiarIntensidadLuz (intensity){
+    var new_task = {'class':'light_intensity','value':intensity};
+    this.tasks.push(new_task);
+    return this;
+}
+
+ArmRobotRepresentation.prototype.cambiarColorLuz = function cambiarIntensidadLuz (color){
+    var new_task = {'class':'light_color','value':color};
+    this.tasks.push(new_task);
+    return this;
+}
+
+
 
 /**
  * Processes incoming data and prepares outgoing data.
@@ -378,6 +397,26 @@ ArmRobotRepresentation.prototype.update = function update ( data ) {
         else {
             this.pitch_vel = this.active_task.value;
         }
+        this.active_task.class = 'none';
+    }
+
+    if (this.active_task.class == 'light_intensity'){
+        if (this.active_task.value > this.max_light_intesity){
+            this.light_intensity = this.max_light_intensity;
+        }
+        else if (this.active_task.value < 0){
+            this.light_intensity = 0;
+        }
+        else {
+            this.light_intensity = this.active_task.value;
+        }
+        this.spotLight.intensity = this.light_intensity;
+        this.active_task.class = 'none';
+    }
+
+    if (this.active_task.class == 'light_color'){
+        this.light_color = this.active_task.value;
+        this.spotLight.color.set(this.light_color);
         this.active_task.class = 'none';
     }
     
