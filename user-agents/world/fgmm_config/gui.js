@@ -245,7 +245,7 @@ var guiFactory = function ( simulator ) {
         if (l1 && l2 && l3 && l4) {
           console.log('done');
           console.log ( "adding actual robots..." );
-          setTimeout ( addRobotsToGui, 500, simulator, gui,l1 ,l2,l3,l4);
+          setTimeout ( addRobotsToGui, 1000, simulator, gui,l1 ,l2,l3,l4);
           console.log(gui.userData);
           var dmx = window.simulator.getRobotById("arm");
           dmx.build(l1,l2,l3,l4);

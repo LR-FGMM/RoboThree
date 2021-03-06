@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../../../../../../threex.volumetricspotlight"
+		},
+		{
+			"path": "../../../../../../lr-fgmm.github.io"
 		}
 	],
 	"settings": {}
