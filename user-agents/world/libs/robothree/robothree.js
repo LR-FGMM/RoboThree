@@ -808,7 +808,14 @@ $(function () {
         }
         simulator.axisHelper.visible = simulator.gui.userData.controls.showAxis;
         simulator.renderStats.update();
-        simulator.renderDebugText();     
+        simulator.renderDebugText();  
+        for (var i = 0; i < Object.keys(simulator.gui.__folders).length; i++) {
+            var key = Object.keys(simulator.gui.__folders)[i];
+            for (var j = 0; j < simulator.gui.__folders[key].__controllers.length; j++ )
+            {
+                simulator.gui.__folders[key].__controllers[j].updateDisplay();
+            }
+        }  
      
     };
 

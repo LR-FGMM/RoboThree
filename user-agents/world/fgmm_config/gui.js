@@ -178,6 +178,38 @@ var guiFactory = function ( simulator ) {
     //light.add(controls, 'Z', -800, 800).onChange(controls.changeLight);
     //light.add(controls, 'Intensidad', 0, 10).onChange(controls.changeLight);
 
+    function addControls() {
+
+    var dmx_controls = new function () {
+
+        var dmx = window.simulator.getRobotById("arm");
+        this.Intensidad = dmx.spotLight.intensity;
+
+        this.changeLight = function changeLight() {
+            dmx.spotLight.intensity = dmx_controls.Intensidad;
+        };
+
+        this.Color = dmx.spotLight.color;
+
+        this.changeColor = function changeColor() {
+            dmx_controls.Color=dmx_controls.Color.replace( '#','0x' );
+            dmx.spotLight.color.setHex(dmx_controls.Color);
+            //console.log(dmx_controls.Color);
+
+
+        };
+
+        
+
+    }
+
+    var movimientos = gui.addFolder("Movimientos");
+ 
+    movimientos.add(dmx_controls, 'Intensidad', 0, 10).onChange(dmx_controls.changeLight);
+    movimientos.addColor(dmx_controls,'Color').onChange(dmx_controls.changeColor);
+
+}
+
     //var meshes = gui.addFolder("Agregar figuras");
     
     //meshes.addColor(controls, 'Color');
@@ -249,6 +281,7 @@ var guiFactory = function ( simulator ) {
           console.log(gui.userData);
           var dmx = window.simulator.getRobotById("arm");
           dmx.build(l1,l2,l3,l4);
+          setTimeout(addControls,1000);
         }
       }
 
