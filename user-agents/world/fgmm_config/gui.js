@@ -179,34 +179,29 @@ var guiFactory = function ( simulator ) {
     //light.add(controls, 'Intensidad', 0, 10).onChange(controls.changeLight);
 
     function addControls() {
-
-    var dmx_controls = new function () {
-
         var dmx = window.simulator.getRobotById("arm");
-        this.Intensidad = dmx.spotLight.intensity;
 
-        this.changeLight = function changeLight() {
-            dmx.spotLight.intensity = dmx_controls.Intensidad;
-        };
+        dmx_params = {"intensidad":dmx.spotLight.intensity,"color":"#0000dd"};
 
-        this.Color = dmx.spotLight.color;
-
-        this.changeColor = function changeColor() {
-            dmx_controls.Color=dmx_controls.Color.replace( '#','0x' );
-            dmx.spotLight.color.setHex(dmx_controls.Color);
-            //console.log(dmx_controls.Color);
-
-
-        };
-
-        
-
-    }
 
     var movimientos = gui.addFolder("Movimientos");
  
-    movimientos.add(dmx_controls, 'Intensidad', 0, 10).onChange(dmx_controls.changeLight);
-    movimientos.addColor(dmx_controls,'Color').onChange(dmx_controls.changeColor);
+    var inten_cont = movimientos.add(dmx_params, 'intensidad', 0, 10).name("Intensidad").onChange(
+        function (value){
+            var dmx = window.simulator.getRobotById("arm");
+            dmx_params.intensidad  = dmx.spotLight.intensity;
+            dmx.spotLight.intensity = value;
+        }
+    );
+    //inten_cont.listen();
+
+    movimientos.addColor(dmx_params,'color').name("Color").onChange(
+        function (value){
+             value=value.replace( '#','0x' );
+             dmx.spotLight.color.setHex(value);
+             console.log(value);
+        }
+    );
 
 }
 
@@ -281,7 +276,8 @@ var guiFactory = function ( simulator ) {
           console.log(gui.userData);
           var dmx = window.simulator.getRobotById("arm");
           dmx.build(l1,l2,l3,l4);
-          setTimeout(addControls,1000);
+          addControls();
+          //setTimeout(addControls,1000);
         }
       }
 
