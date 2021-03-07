@@ -587,6 +587,7 @@ var Simulator = function ( defaults ) {
         this.usedCamera = this.mainCamera; // we keep a reference to the camera that is actually used for each frame
         
         this.orbitControls = new THREE.OrbitControls(this.mainCamera, this.renderer.domElement);
+        this.orbitControls.keyPanSpeed = 0;
         return this;
     };
 

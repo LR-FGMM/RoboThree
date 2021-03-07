@@ -182,32 +182,28 @@ ArmRobotRepresentation.prototype.updateYawAngle = function updateYawAngle (angle
 }
 
 ArmRobotRepresentation.prototype._addTask = function _addTask(a,value){
+    console.log(typeof(value));
+    if(value == null){
+        return this;
+    }
     var new_task = {'class':a,'value':value};
     this.tasks.push(new_task);
     return this;
 }
 ArmRobotRepresentation.prototype.moverYaw = function moverYaw(angulo){
-    var new_task = {'class':'yaw','value':angulo};
-    this.tasks.push(new_task);
-    return this;
+    return this._addTask('yaw',angulo);
 }
 
 ArmRobotRepresentation.prototype.moverPitch = function moverPitch(angulo){
-    var new_task = {'class':'pitch','value':angulo};
-    this.tasks.push(new_task);
-    return this;
+    return this._addTask('pitch',angulo);
 }
 
 ArmRobotRepresentation.prototype.esperar = function esperar(tiempo){
-    var new_task = {'class':'wait', 'value':tiempo};
-    this.tasks.push(new_task);
-    return this;
+    return this._addTask('wait',tiempo);
 }
 
 ArmRobotRepresentation.prototype.cambiarRapidezYaw = function cambiarRapidezYaw(vel){
-    var new_task = {'class':'yaw_vel','value':vel};
-    this.tasks.push(new_task);
-    return this;
+    return this._addTask('yaw_vel',vel);
 }
 
 ArmRobotRepresentation.prototype.cambiarRapidezPitch = function cambiarRapidezPitch(vel){
