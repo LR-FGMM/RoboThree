@@ -207,8 +207,6 @@ var guiFactory = function ( simulator ) {
         function (value){
             var dmx = window.simulator.getRobotById("arm");
             dmx.setYawAngle(value);
-            console.error("que wea");
-            console.error(value);
         }
     );
 
@@ -216,8 +214,6 @@ var guiFactory = function ( simulator ) {
         function (value){
             var dmx = window.simulator.getRobotById("arm");
             dmx.setPitchAngle(value);
-            console.error("que wea pitch");
-            console.error(value);
         }
     );
 
