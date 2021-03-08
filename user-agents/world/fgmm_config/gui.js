@@ -181,7 +181,7 @@ var guiFactory = function ( simulator ) {
     function addControls() {
         var dmx = window.simulator.getRobotById("arm");
 
-        dmx_params = {"intensidad":dmx.spotLight.intensity,"color":"#0000dd"};
+        dmx_params = {"intensidad":dmx.spotLight.intensity,"color":"#0000dd","yaw":0,"pitch":0};
 
 
     var movimientos = gui.addFolder("Movimientos");
@@ -199,7 +199,25 @@ var guiFactory = function ( simulator ) {
         function (value){
              value=value.replace( '#','0x' );
              dmx.spotLight.color.setHex(value);
-             console.log(value);
+             //console.log(value);
+        }
+    );
+
+    movimientos.add(dmx_params, 'yaw', -3, 3).name("Yaw").onChange(
+        function (value){
+            var dmx = window.simulator.getRobotById("arm");
+            dmx.setYawAngle(value);
+            console.error("que wea");
+            console.error(value);
+        }
+    );
+
+    movimientos.add(dmx_params, 'pitch', -2, 2).name("Pitch").onChange(
+        function (value){
+            var dmx = window.simulator.getRobotById("arm");
+            dmx.setPitchAngle(value);
+            console.error("que wea pitch");
+            console.error(value);
         }
     );
 

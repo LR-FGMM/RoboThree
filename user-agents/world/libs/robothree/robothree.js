@@ -809,10 +809,12 @@ $(function () {
         simulator.axisHelper.visible = simulator.gui.userData.controls.showAxis;
         simulator.renderStats.update();
         simulator.renderDebugText();  
-        var dmx = window.simulator.getRobotById("arm");
+        var dmx = simulator.getRobotById("arm");
         if ("Movimientos" in simulator.gui.__folders){
             simulator.gui.__folders["Movimientos"].__controllers[0].setValue(dmx.spotLight.intensity);
             simulator.gui.__folders["Movimientos"].__controllers[1].setValue("#"+dmx.spotLight.color.getHexString());
+            simulator.gui.__folders["Movimientos"].__controllers[2].setValue(dmx.yaw_state);
+            simulator.gui.__folders["Movimientos"].__controllers[3].setValue(dmx.pitch_state);
         }
     };
 

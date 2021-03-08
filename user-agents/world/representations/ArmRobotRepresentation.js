@@ -170,6 +170,18 @@ ArmRobotRepresentation.prototype.updateJointsAngles = function updateJointsAngle
     return this;
 }
 
+ArmRobotRepresentation.prototype.setYawAngle = function setYawAngle (angle){
+    this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),angle-this.yaw_state);
+    this.yaw_state = angle;
+    return this;
+}
+
+ArmRobotRepresentation.prototype.setPitchAngle = function setPitchAngle (angle){
+    this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),angle-this.pitch_state);
+    this.pitch_state = angle;
+    return this;
+}
+
 ArmRobotRepresentation.prototype.updatePitchAngle = function updatePitchAngle (angle){
     if (this.pitch_state + angle > this.pitch_max){
         this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),this.pitch_max-this.pitch_state);
