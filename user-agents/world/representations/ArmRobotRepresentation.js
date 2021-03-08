@@ -11,14 +11,17 @@ ArmRobotRepresentation.prototype.build = function build (l1,l2,l3,l4) {
     
     this.wait_tasks = [];
     this.wait_task = 0;
-
+    
+    this.yaw_max = 3;
+    this.yaw_min = -3;
     this.yaw_state = 0;
     this.yaw_task = 0;
     this.yaw_vel = 0.01;
     this.yaw_tasks = [];
     this.max_vel_yaw = 1;
 
-
+    this.pitch_max = 2;
+    this.pitch_min = -2;
     this.pitch_state = 0 ;
     this.pitch_task = 0;
     this.pitch_vel = 0.01;
@@ -168,17 +171,39 @@ ArmRobotRepresentation.prototype.updateJointsAngles = function updateJointsAngle
 }
 
 ArmRobotRepresentation.prototype.updatePitchAngle = function updatePitchAngle (angle){
-
-    this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),angle);
-    this.pitch_state += angle;
-    return this;
+    if (this.pitch_state + angle > this.pitch_max){
+        this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),this.pitch_max-this.pitch_state);
+        this.pitch_state = this.pitch_max;
+        return this;
+    }
+    else if (this.pitch_state + angle < this.pitch_min){
+        this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),this.pitch_min-this.pitch_state);
+        this.pitch_state = this.pitch_min;
+        return this;
+    }
+    else{
+        this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),angle);
+        this.pitch_state += angle;
+        return this;
+    }
 }
 
 ArmRobotRepresentation.prototype.updateYawAngle = function updateYawAngle (angle){
-
-    this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),angle);
-    this.yaw_state += angle;
-    return this;
+    if (this.yaw_state + angle > this.yaw_max){
+        this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),this.yaw_max-this.yaw_state);
+        this.yaw_state = this.yaw_max;
+        return this;
+    }
+    else if (this.yaw_state + angle < this.yaw_min){
+        this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),this.yaw_min-this.yaw_state);
+        this.yaw_state = this.yaw_min;
+        return this;
+    }
+    else{
+        this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),angle);
+        this.yaw_state += angle;
+        return this;
+    }
 }
 
 ArmRobotRepresentation.prototype._addTask = function _addTask(a,value){
