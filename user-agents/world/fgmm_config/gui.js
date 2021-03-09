@@ -290,8 +290,8 @@ var guiFactory = function ( simulator ) {
           console.log(gui.userData);
           var dmx = window.simulator.getRobotById("arm");
           dmx.build(l1,l2,l3,l4);
-          addControls();
-          //setTimeout(addControls,1000);
+          //addControls();
+          setTimeout(addControls,1500);
         }
       }
 
