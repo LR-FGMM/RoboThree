@@ -438,13 +438,14 @@ var Simulator = function ( defaults ) {
      */
     this.initRenderer = function initRenderer ( options ) {
         var values = $.extend ( {}, this.defaults.renderer, options );
-        this.renderer = new THREE.WebGLRenderer( {antialias: values.antialias, preserveDrawingBuffer: true, alpha: true } );
         //this.renderer.setSize(window.innerWidth, window.innerHeight);
-        var container = document.getElementById('viewport');
-        this.renderer.setSize($(container).width(), $(container).height());
+        var container = document.getElementById('robothree');
+        this.renderer = new THREE.WebGLRenderer( {canvas:container,antialias: values.antialias, preserveDrawingBuffer: true, alpha: true } );
+        //this.renderer.setSize($(container).width(), $(container).height());
         //this.renderer.setClearColor( values.backgroundColor, 1 );
         this.renderer.shadowMap.enabled = values.shadows;
-        $('#viewport').append(this.renderer.domElement);
+        //$('#robothree').append(this.renderer.domElement);
+        this.renderer.setPixelRatio(window.devicePixelRatio);
         return this;
     };
 
@@ -457,14 +458,14 @@ var Simulator = function ( defaults ) {
         this.altRenderer.setSize(160, Math.round( 160 * this.renderer.getSize().height / this.renderer.getSize().width ));
         this.altRenderer.setClearColor( this.renderer.getClearColor(), 1);
         this.altRenderer.shadowMap.enabled = this.renderer.shadowMapEnabled;
-        this.altRenderer.domElement.style.position = 'absolute';
+        this.altRenderer.domElement.style.position = 'relative';
         this.altRenderer.domElement.style.top = '60px';
         this.altRenderer.domElement.style.left = '1px';
         this.altRenderer.domElement.style.zIndex = 100;
         this.altRenderer.domElement.style['border-style'] = 'double';
         this.altRenderer.domElement.style['border-color'] = '#000000';
         this.altRenderer.domElement.style.visibility = 'hidden';
-        $('#viewport').append(this.altRenderer.domElement);
+        //$('#robothree').append(this.altRenderer.domElement);
         return this;
     };
 
@@ -475,12 +476,12 @@ var Simulator = function ( defaults ) {
     this.initRenderStats = function initRenderStats () {
         this.renderStats = new Stats();
         this.renderStats.setMode( this.defaults.stats.mode ); 
-        this.renderStats.domElement.style.position = 'absolute';
+        this.renderStats.domElement.style.position = 'relative';
         this.renderStats.domElement.style.top = '1px';
         this.renderStats.domElement.style.left = '1px';
         this.renderStats.domElement.style.zIndex = 100;
 
-        $('#viewport').append(this.renderStats.domElement);
+        $('#gui-container').append(this.renderStats.domElement);
         return this;
     };
     
@@ -495,27 +496,27 @@ var Simulator = function ( defaults ) {
             .html('<a title="RoboThree Project Website" target="_blank" href="https://github.com/loristissino/RoboThree/">RoboThree ' + this.release + '</a>')
             .css('top', (window.innerHeight - 20 ) +'px')
             ;
-        $('#viewport').append( this.infoBox );
-        this.debugBox = $('<span />');
-        this.infoBox.append ( this.debugBox );
-        this.debugBoxTexts = {};
+        //$('#robothree').append( this.infoBox );
+        //this.debugBox = $('<span />');
+        //this.infoBox.append ( this.debugBox );
+        //this.debugBoxTexts = {};
         return this;
     }
     
     this.pushDebugText = function addDebugText ( obj ) {
-        $.extend( this.debugBoxTexts, obj );
+        //$.extend( this.debugBoxTexts, obj );
     }
     
     this.renderDebugText = function renderDebugText () {
-        if ( this.gui.userData.controls.showDebugText ) {
-            if ( Object.keys( this.debugBoxTexts ).length > 0 ) {
-                this.debugBox.text( [ '', JSON.stringify( this.debugBoxTexts ) ].join( ' - ' ) );
-            }
-        }
-        else {
-            this.debugBox.text( '' );
-        }
-        this.debugBoxTexts = {};
+       // if ( this.gui.userData.controls.showDebugText ) {
+       //     if ( Object.keys( this.debugBoxTexts ).length > 0 ) {
+       //         this.debugBox.text( [ '', JSON.stringify( this.debugBoxTexts ) ].join( ' - ' ) );
+       //     }
+       // }
+       // else {
+       //     this.debugBox.text( '' );
+       // }
+       // this.debugBoxTexts = {};
     }
     
     /**
@@ -788,6 +789,16 @@ var Simulator = function ( defaults ) {
     } 
     
 };
+
+function onResize() {
+
+    simulator.renderer.setSize(simulator.container.innerWidth, simulator.container.innerHeight);
+    simulator.renderer.setPixelRatio(window.devicePixelRatio);
+
+    simulator.mainCamera.aspect = simulator.container.innerWidth / simulator.container.innerHeight;
+    simulator.mainCamera.updateProjectionMatrix();
+
+}
 
 $(function () {
 

@@ -34,7 +34,7 @@ var simulationDefaults = {
     },
     mainCamera: {
         fov: 60,
-        aspect: 1,
+        aspect: window.innerWidth/(2*window.innerHeight),
         near: 1,
         far: 5000,
         position: new THREE.Vector3 ( 0, 150, 100 ),

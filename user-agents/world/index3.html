@@ -20,85 +20,38 @@
         }
 
         #gui-container {
-            z-index: 100;
-            position: relative;
+            z-index: 10;
         }
         /* Create two equal columns that floats next to each other */
         .column {
             flex:50%;
-            height:100%;
+            height: 100%;
             
         }
 
         .row{
             display: flex;
-            height:100%;
+            height: 100%;
         }
-        
 
-        .CodeMirror {
-            border: 1px solid #eee;
-            height: auto;
-            width: auto;
-          }
-
-          html, body{
+         html, body{
             height: 100%;
             width: 100%;
             overflow: hidden;
         }
-
-          #robothree {
+        #robothree {
             width: 100%;
             height: 100%;
-            position: relative;
-            z-index: 1;
             
          }
-
         
     </style>
 
     <title>RoboThree</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 
-    <script type="text/javascript" src="css/dummy.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="css/result-light.css">
-
-    <link rel="stylesheet" type="text/css" href="css/codemirror.css">
-    <link rel="stylesheet" type="text/css" href="css/lint.css">
-    <link rel="stylesheet" href="css/dracula.css">
-
-
-
-
-
-    <script type="text/javascript" src="js/codemirror.js"></script>
-    <script type="text/javascript" src="js/javascript.js"></script>
-    <script type="text/javascript" src="js/css.js"></script>
-    <script type="text/javascript" src="js/htmlmixed.js"></script>
-    <script type="text/javascript" src="js/xml.js"></script>
-    <script type="text/javascript" src="js/lint.js"></script>
-    <script type="text/javascript" src="js/javascript-lint.js"></script>
-    <script type="text/javascript" src="js/json-lint.js"></script>
-    <script type="text/javascript" src="js/css-lint.js"></script>
-    <script type="text/javascript" src="js/html-lint.js"></script>
-    <script type="text/javascript" src="js/jshint.js"></script>
-    <script type="text/javascript" src="js/jsonlint.js"></script>
-    <script type="text/javascript" src="https://csslint.net/js/csslint.js"></script>
-    <script type="text/javascript" src="js/closetag.js"></script>
-    <script type="text/javascript" src="js/matchbrackets.js"></script>
-    <script type="text/javascript" src="js/active-line.js"></script>
-    <script type="text/javascript" src="js/foldcode.js"></script>
-    <script type="text/javascript" src="js/foldgutter.js"></script>
-    <script type="text/javascript" src="js/brace-fold.js"></script>
-    <script type="text/javascript" src="js/xml-fold.js"></script>
-    <script type="text/javascript" src="js/comment-fold.js"></script>
-    
-
-    <style id="compiled-css" type="text/css"></style>
 
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/icons/favicon-96x96.png">
@@ -134,26 +87,27 @@
 </div-->
 <div class="row">
     <div class="column">
-        <textarea class="input-group-addon" id="code-js" name="code-js" >
-        var dmx = window.simulator.getRobotById("arm");
-        dmx.moverPitch(1.5);
-        dmx.moverYaw(1.5);
-        dmx.cambiarIntensidadLuz(5);
-        dmx.cambiarColorLuz("green");
-        dmx.moverYaw(3);
-        dmx.moverPitch(1.6);
-        dmx.moverPitch(0);
-        dmx.moverYaw(0);
-        dmx.cambiarColorLuz("red");
-        dmx.cambiarIntensidadLuz(1);
-        </textarea>
+        <!--textarea class="input-group-addon" id="code-js" name="code-js" >
+            var dmx = window.simulator.getRobotById("arm");
+            dmx.moverPitch(1.5);
+            dmx.moverYaw(1.5);
+            dmx.cambiarIntensidadLuz(5);
+            dmx.cambiarColorLuz("green");
+            dmx.moverYaw(3);
+            dmx.moverPitch(1.6);
+            dmx.moverPitch(0);
+            dmx.moverYaw(0);
+            dmx.cambiarColorLuz("red");
+            dmx.cambiarIntensidadLuz(1);
+        </textarea-->
+        <p>hola hola</p>    
         <div id="button-container">
             <button onclick id="run-code"> Run Code </button>
         </div>
+        <div id="gui-container" ></div> 
     </div>
     <div class="column">
         <canvas id="robothree"></canvas>
-        <div id="gui-container" ></div> 
     </div>
   </div>
 
@@ -174,13 +128,6 @@
 
         });
       
-    });
-    var editor = CodeMirror.fromTextArea(document.getElementById("code-js"), {
-      lineNumbers: true,
-      mode: "javascript",
-      theme:"dracula",
-      gutters: ["CodeMirror-lint-markers"],
-      lint: true
     });
   
 </script>
