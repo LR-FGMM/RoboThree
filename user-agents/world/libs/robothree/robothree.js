@@ -787,18 +787,18 @@ var Simulator = function ( defaults ) {
         }
         return false;
     } 
+    this.resizeRendererToDisplaySize = function resizeRendererToDisplaySize() {
+        const canvas = this.renderer.domElement;
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        const needResize = canvas.width !== width || canvas.height !== height;
+        if (needResize) {
+          this.renderer.setSize(width, height, false);
+        }
+        return needResize;
+    }
     
 };
-
-function onResize() {
-
-    simulator.renderer.setSize(simulator.container.innerWidth, simulator.container.innerHeight);
-    simulator.renderer.setPixelRatio(window.devicePixelRatio);
-
-    simulator.mainCamera.aspect = simulator.container.innerWidth / simulator.container.innerHeight;
-    simulator.mainCamera.updateProjectionMatrix();
-
-}
 
 $(function () {
 
@@ -829,6 +829,12 @@ $(function () {
             simulator.gui.__folders["Controles"].__controllers[4].setValue(dmx.yaw_vel);
             simulator.gui.__folders["Controles"].__controllers[5].setValue(dmx.pitch_vel);
         }
+        if (simulator.resizeRendererToDisplaySize()) {
+            const canvas = simulator.renderer.domElement;
+            simulator.mainCamera.aspect = canvas.clientWidth / canvas.clientHeight;
+            simulator.mainCamera.updateProjectionMatrix();
+        }
+
     };
 
     //Physijs.scripts.worker = 'libs/vendor/physijs_worker.js';
