@@ -242,16 +242,16 @@ var guiFactory = function ( simulator ) {
     //meshes.add(controls, 'Caja');
     //meshes.add(controls, 'Esfera');
     
-    var managers = gui.addFolder("Robots");
+    //var managers = gui.addFolder("Robots");
 
     gui.userData.managersSubfolders = [];
 
-    $.each( simulator.robotsManagers, function ( index, robotsManager ) {
-        var manager = managers.addFolder( index );
-        manager.userData = { robotsManager: robotsManager };
-        console.log( manager );
-        gui.userData.managersSubfolders.push ( manager );
-    });
+    //$.each( simulator.robotsManagers, function ( index, robotsManager ) {
+    //    var manager = managers.addFolder( index );
+    //    manager.userData = { robotsManager: robotsManager };
+    //    console.log( manager );
+    //    gui.userData.managersSubfolders.push ( manager );
+    //});
     
     
 
@@ -303,7 +303,7 @@ var guiFactory = function ( simulator ) {
         if (l1 && l2 && l3 && l4) {
           console.log('done');
           console.log ( "adding actual robots..." );
-          setTimeout ( addRobotsToGui, 1000, simulator, gui,l1 ,l2,l3,l4);
+          //setTimeout ( addRobotsToGui, 1000, simulator, gui,l1 ,l2,l3,l4);
           //setTimeout ( addRobotsToGui, 1000, simulator, gui,l1 ,l2,l3,l4);
           //console.log(gui.userData);
           //var dmx = setTimeout(window.simulator.getRobotById,1000,"arm");
@@ -313,6 +313,7 @@ var guiFactory = function ( simulator ) {
           setTimeout(addControls,1500);
         }
       }
-
+    
+    
     return gui;
 };

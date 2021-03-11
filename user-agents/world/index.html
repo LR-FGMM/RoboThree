@@ -21,7 +21,7 @@
 
         #gui-container {
             z-index: 100;
-            position: relative;
+            position: absolute;
         }
         /* Create two equal columns that floats next to each other */
         .column {
@@ -151,10 +151,11 @@
         <div id="button-container">
             <button onclick id="run-code"> Run Code </button>
         </div>
-        <div id="gui-container" ></div> 
+        
     </div>
     
     <div class="column">
+        <div id="gui-container" ></div> 
         <canvas id="robothree"></canvas>
     </div>
   </div>

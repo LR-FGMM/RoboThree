@@ -481,7 +481,7 @@ var Simulator = function ( defaults ) {
         this.renderStats.domElement.style.left = '1px';
         this.renderStats.domElement.style.zIndex = 100;
 
-        $('#gui-container').append(this.renderStats.domElement);
+        //$('#gui-container').append(this.renderStats.domElement);
         return this;
     };
     
