@@ -810,11 +810,11 @@ $(function () {
         simulator.renderStats.update();
         simulator.renderDebugText();  
         var dmx = simulator.getRobotById("arm");
-        if ("Movimientos" in simulator.gui.__folders){
-            simulator.gui.__folders["Movimientos"].__controllers[0].setValue(dmx.spotLight.intensity);
-            simulator.gui.__folders["Movimientos"].__controllers[1].setValue("#"+dmx.spotLight.color.getHexString());
-            simulator.gui.__folders["Movimientos"].__controllers[2].setValue(dmx.yaw_state);
-            simulator.gui.__folders["Movimientos"].__controllers[3].setValue(dmx.pitch_state);
+        if ("Controles" in simulator.gui.__folders && simulator.gui.__folders["Controles"].__controllers.length > 3){
+            simulator.gui.__folders["Controles"].__controllers[0].setValue(dmx.spotLight.intensity);
+            simulator.gui.__folders["Controles"].__controllers[1].setValue("#"+dmx.spotLight.color.getHexString());
+            simulator.gui.__folders["Controles"].__controllers[2].setValue(dmx.yaw_state);
+            simulator.gui.__folders["Controles"].__controllers[3].setValue(dmx.pitch_state);
         }
     };
 

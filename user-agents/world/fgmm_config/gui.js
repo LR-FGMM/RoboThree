@@ -181,10 +181,10 @@ var guiFactory = function ( simulator ) {
     function addControls() {
         var dmx = window.simulator.getRobotById("arm");
 
-        dmx_params = {"intensidad":dmx.spotLight.intensity,"color":"#0000dd","yaw":0,"pitch":0};
+        dmx_params = {"intensidad":dmx.spotLight.intensity,"color":"#0000dd","yaw":0.1,"pitch":0.1};
 
 
-    var movimientos = gui.addFolder("Movimientos");
+    var movimientos = gui.addFolder("Controles");
  
     var inten_cont = movimientos.add(dmx_params, 'intensidad', 0, 10).name("Intensidad").onChange(
         function (value){
@@ -203,19 +203,21 @@ var guiFactory = function ( simulator ) {
         }
     );
 
-    movimientos.add(dmx_params, 'yaw', -3, 3).name("Yaw").onChange(
+    movimientos.add(dmx_params, 'yaw', -3., 3.,0.1).name("Yaw").onChange(
         function (value){
             var dmx = window.simulator.getRobotById("arm");
             dmx.setYawAngle(value);
         }
-    );
+    )
 
-    movimientos.add(dmx_params, 'pitch', -2, 2).name("Pitch").onChange(
+    movimientos.add(dmx_params, 'pitch', -2., 2.,0.1).name("Pitch").onChange(
         function (value){
             var dmx = window.simulator.getRobotById("arm");
             dmx.setPitchAngle(value);
         }
-    );
+    )
+    dmx_params.yaw = 0;
+    dmx_params.pitch = 0;
 
 }
 
@@ -287,7 +289,9 @@ var guiFactory = function ( simulator ) {
           console.log('done');
           console.log ( "adding actual robots..." );
           setTimeout ( addRobotsToGui, 1000, simulator, gui,l1 ,l2,l3,l4);
-          console.log(gui.userData);
+          //setTimeout ( addRobotsToGui, 1000, simulator, gui,l1 ,l2,l3,l4);
+          //console.log(gui.userData);
+          //var dmx = setTimeout(window.simulator.getRobotById,1000,"arm");
           var dmx = window.simulator.getRobotById("arm");
           dmx.build(l1,l2,l3,l4);
           //addControls();
