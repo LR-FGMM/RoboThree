@@ -495,7 +495,7 @@ var Simulator = function ( defaults ) {
         var container = document.getElementById('robothree');
         this.renderer = new THREE.WebGLRenderer( {canvas:container,antialias: values.antialias, preserveDrawingBuffer: true, alpha: true } );
         //this.renderer.setSize($(container).width(), $(container).height());
-        //this.renderer.setClearColor( values.backgroundColor, 1 );
+        this.renderer.setClearColor( values.backgroundColor, 1 );
         this.renderer.shadowMap.enabled = values.shadows;
         //$('#robothree').append(this.renderer.domElement);
         this.renderer.setPixelRatio(window.devicePixelRatio);

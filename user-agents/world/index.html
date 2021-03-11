@@ -25,6 +25,7 @@
         }
         /* Create two equal columns that floats next to each other */
         .column {
+            background-color: grey;
             flex:50%;
             height:100%;
             
@@ -57,10 +58,21 @@
             
          }
 
+         #run-code {
+            background-image: url( 'img/run.png' );
+            background-size: 96px 42px;
+            height: 42px;  
+            width: 96px;
+        }
+
+        #buttom-container{
+            background-color: gray;    
+        }
+
         
     </style>
 
-    <title>RoboThree</title>
+    <title>FGMM-SIM</title>
     <meta charset="utf-8" />
 
 
@@ -137,21 +149,21 @@
 
     <div class="column">
         <div id="button-container">
-            <button onclick id="run-code"> Run Code </button>
+            <button onclick id="run-code"> </button>
         </div>
-        <textarea class="input-group-addon" id="code-js" name="code-js" >
-        var dmx = window.simulator.getRobotById("arm");
-        dmx.moverPitch(1.5);
-        dmx.moverYaw(1.5);
-        dmx.cambiarIntensidadLuz(5);
-        dmx.cambiarColorLuz("green");
-        dmx.moverYaw(3);
-        dmx.moverPitch(1.6);
-        dmx.moverPitch(0);
-        dmx.moverYaw(0);
-        dmx.cambiarColorLuz("red");
-        dmx.cambiarIntensidadLuz(1);
-        </textarea>
+<textarea class="input-group-addon" id="code-js" name="code-js" >
+var dmx = window.simulator.getRobotById("arm");
+dmx.moverPitch(1.5);
+dmx.moverYaw(1.5);
+dmx.cambiarIntensidadLuz(5);
+dmx.cambiarColorLuz("green");
+dmx.moverYaw(3);
+dmx.moverPitch(1.6);
+dmx.moverPitch(0);
+dmx.moverYaw(0);
+dmx.cambiarColorLuz("red");
+dmx.cambiarIntensidadLuz(1);
+</textarea>
     </div>
     
     <div class="column">
