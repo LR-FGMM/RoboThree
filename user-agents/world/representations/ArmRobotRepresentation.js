@@ -18,7 +18,7 @@ ArmRobotRepresentation.prototype.build = function build (l1,l2,l3,l4) {
     this.yaw_task = 0;
     this.yaw_vel = 0.01;
     this.yaw_tasks = [];
-    this.max_vel_yaw = 1;
+    this.max_vel_yaw = 0.25;
 
     this.pitch_max = 2;
     this.pitch_min = -2;
@@ -26,7 +26,7 @@ ArmRobotRepresentation.prototype.build = function build (l1,l2,l3,l4) {
     this.pitch_task = 0;
     this.pitch_vel = 0.01;
     this.pitch_tasks = [];
-    this.max_vel_pitch = 1;
+    this.max_vel_pitch = 0.25;
 
     this.light_intensity = 1;
     this.max_light_intensity = 5;
@@ -246,6 +246,16 @@ ArmRobotRepresentation.prototype.cambiarRapidezYaw = function cambiarRapidezYaw(
 ArmRobotRepresentation.prototype.cambiarRapidezPitch = function cambiarRapidezPitch(vel){
     return this._addTask('pitch_vel',vel.toFixed(2));
 }
+
+ArmRobotRepresentation.prototype.setVelPitch = function setVelPitch(vel){
+    this.pitch_vel = vel;
+    return this;
+}
+
+ArmRobotRepresentation.prototype.setVelYaw = function setVelYaw(vel){
+    this.yaw_vel = vel;
+    return this;
+}
 /**
  * Updates light intensity
  * @param {float} intensity - intensity of light (0 to 1)
@@ -321,14 +331,29 @@ ArmRobotRepresentation.prototype.update = function update ( data ) {
     
     if (this.active_task.class == 'yaw' && !this.nearZero(this.active_task.value)){
         const sig_yaw = Math.sign(this.active_task.value);
-        this.updateYawAngle(this.yaw_vel*sig_yaw);
-        this.active_task.value -= this.yaw_vel*sig_yaw;
+        if (sig_yaw*(this.active_task.value - this.yaw_vel*sig_yaw) < 0){
+            this.updateYawAngle(this.active_task.value);
+            this.active_task.value = 0;
+        }
+        else{
+            this.updateYawAngle(this.yaw_vel*sig_yaw);
+            this.active_task.value -= this.yaw_vel*sig_yaw;
+        }
+            //this.updateYawAngle(this.yaw_vel*this.active_task.value);
+        //this.active_task.value -= this.yaw_vel*this.active_task.value;
+
     }
     
     if (this.active_task.class == 'pitch' && !this.nearZero(this.active_task.value)){
         const sig_pitch = Math.sign(this.active_task.value);
-        this.updatePitchAngle(this.pitch_vel*sig_pitch);
-        this.active_task.value -= this.pitch_vel*sig_pitch;
+        if (sig_pitch*(this.active_task.value - this.pitch_vel*sig_pitch) < 0){
+            this.updatePitchAngle(this.active_task.value);
+            this.active_task.value = 0;
+        }
+        else{
+            this.updatePitchAngle(this.pitch_vel*sig_pitch);
+            this.active_task.value -= this.pitch_vel*sig_pitch;
+        }
     }
 
     if (this.active_task.class == 'yaw' && this.nearZero(this.active_task.value)){

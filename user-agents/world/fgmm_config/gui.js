@@ -181,7 +181,7 @@ var guiFactory = function ( simulator ) {
     function addControls() {
         var dmx = window.simulator.getRobotById("arm");
 
-        dmx_params = {"intensidad":dmx.spotLight.intensity,"color":"#0000dd","yaw":0.1,"pitch":0.1};
+        dmx_params = {"intensidad":dmx.spotLight.intensity,"color":"#0000dd","yaw":0.1,"pitch":0.1,"rapidez_pitch":0.1,"rapidez_yaw":0.1};
 
 
     var movimientos = gui.addFolder("Controles");
@@ -218,6 +218,21 @@ var guiFactory = function ( simulator ) {
     )
     dmx_params.yaw = 0;
     dmx_params.pitch = 0;
+
+    movimientos.add(dmx_params, "rapidez_yaw",0.01,0.35,0.01).name("Rapidez Yaw").onChange(
+        function (value){
+            var dmx = window.simulator.getRobotById("arm");
+            dmx.setVelYaw(value);
+        }
+    )
+
+    movimientos.add(dmx_params, "rapidez_pitch",0.01,0.35,0.01).name("Rapidez Pitch").onChange(
+        function (value){
+            var dmx = window.simulator.getRobotById("arm");
+            dmx.setVelPitch(value);
+        }
+    )
+
 
 }
 

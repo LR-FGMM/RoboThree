@@ -815,6 +815,8 @@ $(function () {
             simulator.gui.__folders["Controles"].__controllers[1].setValue("#"+dmx.spotLight.color.getHexString());
             simulator.gui.__folders["Controles"].__controllers[2].setValue(dmx.yaw_state);
             simulator.gui.__folders["Controles"].__controllers[3].setValue(dmx.pitch_state);
+            simulator.gui.__folders["Controles"].__controllers[4].setValue(dmx.yaw_vel);
+            simulator.gui.__folders["Controles"].__controllers[5].setValue(dmx.pitch_vel);
         }
     };
 
