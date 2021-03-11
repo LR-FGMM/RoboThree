@@ -38,8 +38,8 @@
 
         .CodeMirror {
             border: 1px solid #eee;
-            height: auto;
-            width: auto;
+            height: 100%;
+            width: 100%;
           }
 
           html, body{
@@ -134,7 +134,11 @@
 
 </div-->
 <div class="row">
+
     <div class="column">
+        <div id="button-container">
+            <button onclick id="run-code"> Run Code </button>
+        </div>
         <textarea class="input-group-addon" id="code-js" name="code-js" >
         var dmx = window.simulator.getRobotById("arm");
         dmx.moverPitch(1.5);
@@ -148,10 +152,6 @@
         dmx.cambiarColorLuz("red");
         dmx.cambiarIntensidadLuz(1);
         </textarea>
-        <div id="button-container">
-            <button onclick id="run-code"> Run Code </button>
-        </div>
-        
     </div>
     
     <div class="column">

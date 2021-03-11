@@ -64,7 +64,7 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
         }
     }, this.initialValues);
 
-    this.model_scale = 2;
+    this.model_scale = 3;
     this.l1 = l1;
     this.l1.castShadow = true;
     this.l1.receiveShadow = true;
