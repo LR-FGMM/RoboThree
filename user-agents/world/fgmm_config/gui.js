@@ -252,67 +252,12 @@ var guiFactory = function ( simulator ) {
     //    console.log( manager );
     //    gui.userData.managersSubfolders.push ( manager );
     //});
+
+    setTimeout(addControls,1500);
     
     
 
-    const loader = new THREE.STLLoader();
 
-    var l1, l2, l3, l4;
-
-    loader.load( './models/base.stl', function ( geometry ) {
-
-        const material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
-        l1 = new THREE.Mesh( geometry, material );
-        next();
-
-        
-    } );
-    
-    loader.load( './models/brazos.stl', function ( geometry ) {
-
-        const material2 = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
-        l2 = new THREE.Mesh( geometry, material2 );
-        next();
-
-        
-    } );
-
-    loader.load( './models/cabeza.stl', function ( geometry ) {
-
-        const material3 = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
-        l3 = new THREE.Mesh( geometry, material3 );
-        next();
-
-        
-    } );
-
-    loader.load( './models/luz.stl', function ( geometry ) {
-
-        const material4 = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
-        l4 = new THREE.Mesh( geometry, material4 );
-        next();
-
-        
-    } );
-
-    
-
-
-
-    function next() {
-        if (l1 && l2 && l3 && l4) {
-          console.log('done');
-          console.log ( "adding actual robots..." );
-          //setTimeout ( addRobotsToGui, 1000, simulator, gui,l1 ,l2,l3,l4);
-          //setTimeout ( addRobotsToGui, 1000, simulator, gui,l1 ,l2,l3,l4);
-          //console.log(gui.userData);
-          //var dmx = setTimeout(window.simulator.getRobotById,1000,"arm");
-          var dmx = window.simulator.getRobotById("arm");
-          dmx.build(l1,l2,l3,l4);
-          //addControls();
-          setTimeout(addControls,1500);
-        }
-      }
     
     
     return gui;
