@@ -124,12 +124,23 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
     this.spotLight.target.position.set(0,0,301);
 
     this.lightHelper = new THREE.SpotLightHelper( this.spotLight ,5);
+    //var geometry	= new THREE.CylinderGeometry( 0.1, 1.5, 5, 32*2, 20, true);
+    var geo_cone = new THREE.CylinderGeometry( 0.1, 1.5, 5, 32*2, 20, true);
+    var cone_scale = 500;
+    geo_cone.scale(cone_scale,cone_scale,cone_scale);
+	geo_cone.applyMatrix( new THREE.Matrix4().makeTranslation( 0, -3.2*cone_scale, 0 ) );
+	geo_cone.applyMatrix( new THREE.Matrix4().makeRotationX( -Math.PI / 2 ) );
 
-    var geo_cone = new THREE.CylinderGeometry(0.0, 50, 500, 32*2, 20, true);
+   
     var vol_mat = new THREEx.VolumetricSpotLightMaterial();
     var l_mesh = new THREE.Mesh(geo_cone, vol_mat);
+    l_mesh.position.set(1.5,2,0)
+    vol_mat.uniforms.lightColor.value.set('white');
+    vol_mat.uniforms.spotPosition.value	= l_mesh.position;
+    vol_mat.uniforms['anglePower'].value = 3;
+    vol_mat.uniforms['attenuation'].value = 10000;
+    
 
-    vol_mat.uniforms.lightColor.value.set('blue');
 
 
     this.l1.add(this.j1);
@@ -151,6 +162,7 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
 
 ArmRobotRepresentation.prototype.finalizeBody = function finalizeBody () {
     this.scene.add ( this.l1 );
+    //this.scene.add(this.l_mesh)
     return this;
 }
 

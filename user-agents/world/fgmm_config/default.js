@@ -44,7 +44,7 @@ var simulationDefaults = {
     },
     light: {
         color: 0xFFFFFF,
-        intensity: 0.5,
+        intensity: 0.1,
         position: new THREE.Vector3( -28, 281, 218 ),
         near: 11,
         far: 700
