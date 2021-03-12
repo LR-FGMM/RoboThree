@@ -253,7 +253,7 @@ var guiFactory = function ( simulator ) {
     //    gui.userData.managersSubfolders.push ( manager );
     //});
 
-    setTimeout(addControls,1500);
+    window.addEventListener('robot_ready',addControls);
     
     
 

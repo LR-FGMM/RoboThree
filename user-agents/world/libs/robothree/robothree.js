@@ -406,6 +406,9 @@ RobotsManager.prototype.addRobot = function ( robot ) {
                   //var dmx = setTimeout(window.simulator.getRobotById,1000,"arm");
                   var dmx = window.simulator.getRobotById("arm");
                   dmx.build(l1,l2,l3,l4);
+                  const robot_ready = new Event('robot_ready');
+                  window.dispatchEvent(robot_ready);
+
                 }
               }
             return rm;
