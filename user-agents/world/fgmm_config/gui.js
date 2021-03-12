@@ -191,6 +191,7 @@ var guiFactory = function ( simulator ) {
             var dmx = window.simulator.getRobotById("arm");
             dmx_params.intensidad  = dmx.spotLight.intensity;
             dmx.spotLight.intensity = value;
+            dmx.vol_mat.uniforms['attenuation'].value = 10000**value;
         }
     );
     //inten_cont.listen();
@@ -199,6 +200,7 @@ var guiFactory = function ( simulator ) {
         function (value){
              value=value.replace( '#','0x' );
              dmx.spotLight.color.setHex(value);
+             dmx.vol_mat.uniforms.lightColor.value.setHex(value);
              //console.log(value);
         }
     );

@@ -132,13 +132,13 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
 	geo_cone.applyMatrix( new THREE.Matrix4().makeRotationX( -Math.PI / 2 ) );
 
    
-    var vol_mat = new THREEx.VolumetricSpotLightMaterial();
-    var l_mesh = new THREE.Mesh(geo_cone, vol_mat);
-    l_mesh.position.set(1.5,2,0)
-    vol_mat.uniforms.lightColor.value.set('white');
-    vol_mat.uniforms.spotPosition.value	= l_mesh.position;
-    vol_mat.uniforms['anglePower'].value = 3;
-    vol_mat.uniforms['attenuation'].value = 10000;
+    this.vol_mat = new THREEx.VolumetricSpotLightMaterial();
+    this.l_mesh = new THREE.Mesh(geo_cone, this.vol_mat);
+    //this.l_mesh.position.set(1.5,2,0)
+    this.vol_mat.uniforms.lightColor.value.set(this.spotLight.color);
+    this.vol_mat.uniforms.spotPosition.value	= this.l_mesh.position;
+    this.vol_mat.uniforms['anglePower'].value = 3;
+    this.vol_mat.uniforms['attenuation'].value = 10000;
     
 
 
@@ -152,7 +152,7 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
 
     this.l4.add(this.spotLight.target);
 
-    this.l4.add(l_mesh);
+    this.l4.add(this.l_mesh);
 
     this.scene.traverse(object => {
         if(object.type === 'Mesh') object.material.needsUpdate = true;
@@ -413,12 +413,14 @@ ArmRobotRepresentation.prototype.update = function update ( data ) {
             this.light_intensity = this.active_task.value;
         }
         this.spotLight.intensity = this.light_intensity;
+        this.vol_mat.uniforms['attenuation'].value = 10000**this.light_intensity;
         this.active_task.class = 'none';
     }
 
     if (this.active_task.class == 'light_color'){
         this.light_color = this.active_task.value;
         this.spotLight.color.set(this.light_color);
+        this.vol_mat.uniforms.lightColor.value.set(this.light_color);
         this.active_task.class = 'none';
     }
     

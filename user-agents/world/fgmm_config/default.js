@@ -1,9 +1,10 @@
 var host = '';
 //var host = '192.168.1.12:9080';
 //var host = 'silent-robot-304412.rj.r.appspot.com';
-var wall_size = 1000;
+var wall_size = 1500;
 var wall_height = 700;
 var wall_width = 1024;
+var wall_thick = 4;
 var simulationDefaults = {
     stats: {
         mode: 0 // 0: fps, 1: ms, 2: mb (see http://github.com/mrdoob/stats.js)
@@ -44,7 +45,7 @@ var simulationDefaults = {
     },
     light: {
         color: 0xFFFFFF,
-        intensity: 0.1,
+        intensity: 0.3,
         position: new THREE.Vector3( -28, 281, 218 ),
         near: 11,
         far: 700
@@ -71,24 +72,24 @@ var simulationDefaults = {
                 position: new THREE.Vector3(0,250,0)
             }, */
             leftBorder: {
-                sizeX: 4,
+                sizeX: wall_thick*2,
                 sizeY: wall_height,
                 sizeZ: wall_width,
-                position: new THREE.Vector3( -wall_width/2, wall_height/2, 0 ),
+                position: new THREE.Vector3( -wall_width/2-wall_thick, wall_height/2, 0 ),
                 color: 0xE8AE8A
             },
             rightBorder: {
-                sizeX: 4,
+                sizeX: wall_thick*2,
                 sizeY: wall_height,
                 sizeZ: wall_width,
-                position: new THREE.Vector3( wall_width/2, wall_height/2, 0 ),
+                position: new THREE.Vector3( wall_width/2+wall_thick, wall_height/2, 0 ),
                 color: 0xE8AE8A
             },
             topBorder: {
                 sizeX: wall_width,
                 sizeY: wall_height,
-                sizeZ: 4,
-                position: new THREE.Vector3( 0, wall_height/2, -wall_width/2 ),
+                sizeZ: wall_thick*2,
+                position: new THREE.Vector3( 0, wall_height/2, -wall_width/2-wall_thick ),
                 color: 0xE8AE8A
             },
             /*bottomBorder: {
