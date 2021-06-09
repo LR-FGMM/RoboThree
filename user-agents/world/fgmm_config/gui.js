@@ -178,62 +178,63 @@ var guiFactory = function ( simulator ) {
     //light.add(controls, 'Z', -800, 800).onChange(controls.changeLight);
     //light.add(controls, 'Intensidad', 0, 10).onChange(controls.changeLight);
 
-    function addControls() {
-        var dmx = window.simulator.getRobotById("arm");
+    function addControls(e) {
+        var dmx = window.simulator.getRobotById(e.detail);
+        var robot_id = e.detail;
 
         dmx_params = {"intensidad":dmx.spotLight.intensity,"color":"#0000dd","yaw":0.1,"pitch":0.1,"rapidez_pitch":0.1,"rapidez_yaw":0.1};
 
 
-    var movimientos = gui.addFolder("Controles");
- 
-    var inten_cont = movimientos.add(dmx_params, 'intensidad', 0, 10).name("Intensidad").onChange(
-        function (value){
-            var dmx = window.simulator.getRobotById("arm");
-            dmx_params.intensidad  = dmx.spotLight.intensity;
-            dmx.spotLight.intensity = value;
-            dmx.vol_mat.uniforms['attenuation'].value = 10000**value;
-        }
-    );
-    //inten_cont.listen();
+        var movimientos = gui.addFolder("Controles "+e.detail);
+    
+        var inten_cont = movimientos.add(dmx_params, 'intensidad', 0, 10).name("Intensidad").onChange(
+            function (value){
+                var dmx = window.simulator.getRobotById("arm");
+                dmx_params.intensidad  = dmx.spotLight.intensity;
+                dmx.spotLight.intensity = value;
+                dmx.vol_mat.uniforms['attenuation'].value = 10000**value;
+            }
+        );
+        //inten_cont.listen();
 
-    movimientos.addColor(dmx_params,'color').name("Color").onChange(
-        function (value){
-             value=value.replace( '#','0x' );
-             dmx.spotLight.color.setHex(value);
-             dmx.vol_mat.uniforms.lightColor.value.setHex(value);
-             //console.log(value);
-        }
-    );
+        movimientos.addColor(dmx_params,'color').name("Color").onChange(
+            function (value){
+                value=value.replace( '#','0x' );
+                dmx.spotLight.color.setHex(value);
+                dmx.vol_mat.uniforms.lightColor.value.setHex(value);
+                //console.log(value);
+            }
+        );
 
-    movimientos.add(dmx_params, 'yaw', -3., 3.,0.1).name("Yaw").onChange(
-        function (value){
-            var dmx = window.simulator.getRobotById("arm");
-            dmx.setYawAngle(value);
-        }
-    )
+        movimientos.add(dmx_params, 'yaw', -3., 3.,0.1).name("Yaw").onChange(
+            function (value){
+                var dmx = window.simulator.getRobotById(robot_id);
+                dmx.setYawAngle(value);
+            }
+        )
 
-    movimientos.add(dmx_params, 'pitch', -2., 2.,0.1).name("Pitch").onChange(
-        function (value){
-            var dmx = window.simulator.getRobotById("arm");
-            dmx.setPitchAngle(value);
-        }
-    )
-    dmx_params.yaw = 0;
-    dmx_params.pitch = 0;
+        movimientos.add(dmx_params, 'pitch', -2., 2.,0.1).name("Pitch").onChange(
+            function (value){
+                var dmx = window.simulator.getRobotById(robot_id);
+                dmx.setPitchAngle(value);
+            }
+        )
+        dmx_params.yaw = 0;
+        dmx_params.pitch = 0;
 
-    movimientos.add(dmx_params, "rapidez_yaw",0.01,0.35,0.01).name("Rapidez Yaw").onChange(
-        function (value){
-            var dmx = window.simulator.getRobotById("arm");
-            dmx.setVelYaw(value);
-        }
-    )
+        movimientos.add(dmx_params, "rapidez_yaw",0.01,0.35,0.01).name("Rapidez Yaw").onChange(
+            function (value){
+                var dmx = window.simulator.getRobotById(robot_id);
+                dmx.setVelYaw(value);
+            }
+        )
 
-    movimientos.add(dmx_params, "rapidez_pitch",0.01,0.35,0.01).name("Rapidez Pitch").onChange(
-        function (value){
-            var dmx = window.simulator.getRobotById("arm");
-            dmx.setVelPitch(value);
-        }
-    )
+        movimientos.add(dmx_params, "rapidez_pitch",0.01,0.35,0.01).name("Rapidez Pitch").onChange(
+            function (value){
+                var dmx = window.simulator.getRobotById(robot_id);
+                dmx.setVelPitch(value);
+            }
+        )
 
 
 }

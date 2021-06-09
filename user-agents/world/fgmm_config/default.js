@@ -1,10 +1,11 @@
 var host = '';
 //var host = '192.168.1.12:9080';
 //var host = 'silent-robot-304412.rj.r.appspot.com';
-var wall_size = 1500;
-var wall_height = 700;
-var wall_width = 1024;
+var wall_size = 3500;
+var wall_height = 1000;
+var wall_width = 2048;
 var wall_thick = 4;
+var dmx_ring_radius = 300;
 var simulationDefaults = {
     stats: {
         mode: 0 // 0: fps, 1: ms, 2: mb (see http://github.com/mrdoob/stats.js)
@@ -15,12 +16,43 @@ var simulationDefaults = {
             failureColor: 0xffaaaa,
             robots: [
                 {
-                    id: 'arm',
+                    id: 'dmx1',
                     name: "Arm",
                     owner: 'Player One',
                     class: 'ArmRobotRepresentation',
                     initialValues: {
-                        debugging: false
+                        debugging: false,
+                        position: new THREE.Vector3(-dmx_ring_radius/2,0,-dmx_ring_radius)
+                    }
+                },
+                {
+                    id: 'dmx2',
+                    name: "Arm2",
+                    owner: 'Player One',
+                    class: 'ArmRobotRepresentation',
+                    initialValues: {
+                        debugging: false,
+                        position: new THREE.Vector3(dmx_ring_radius,0,-dmx_ring_radius/2)
+                    }
+                },
+                {
+                    id: 'dmx3',
+                    name: "Arm2",
+                    owner: 'Player One',
+                    class: 'ArmRobotRepresentation',
+                    initialValues: {
+                        debugging: false,
+                        position: new THREE.Vector3(-dmx_ring_radius,0,dmx_ring_radius/2)
+                    }
+                },
+                {
+                    id: 'dmx4',
+                    name: "Arm2",
+                    owner: 'Player One',
+                    class: 'ArmRobotRepresentation',
+                    initialValues: {
+                        debugging: false,
+                        position: new THREE.Vector3(dmx_ring_radius/2,0,dmx_ring_radius)
                     }
                 }
             ]
@@ -36,19 +68,19 @@ var simulationDefaults = {
 
     },
     mainCamera: {
-        fov: 60,
+        fov: 90,
         aspect: window.innerWidth/(2*window.innerHeight),
         near: 1,
-        far: 5000,
-        position: new THREE.Vector3 ( 0, 150, 100 ),
+        far: 8000,
+        position: new THREE.Vector3 ( 0, 1000, 800 ),
         lookAt: new THREE.Vector3( 0, 0, 0 )
     },
     light: {
         color: 0xFFFFFF,
-        intensity: 0.3,
-        position: new THREE.Vector3( -28, 281, 218 ),
-        near: 11,
-        far: 700
+        intensity: 1,
+        position: new THREE.Vector3( 0, 1000, 1000 ),
+        near: 110,
+        far: 1200
     },
     axisHelper: {
         visible: true,
@@ -60,10 +92,10 @@ var simulationDefaults = {
         restitution: 0.1,
         pieces: {
             bottom: {
-                sizeX: 1024,
-                sizeY: 2,
-                sizeZ: 1024,
-                position: new THREE.Vector3( 0, -1, 0 )
+                sizeX: 2048,
+                sizeY: 500,
+                sizeZ: 2048,
+                position: new THREE.Vector3( 0, -250, 0 )
             },
             /* top: {
                 sizeX: 1024,

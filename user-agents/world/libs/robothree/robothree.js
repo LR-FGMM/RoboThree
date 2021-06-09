@@ -404,9 +404,9 @@ RobotsManager.prototype.addRobot = function ( robot ) {
                   //setTimeout ( addRobotsToGui, 1000, simulator, gui,l1 ,l2,l3,l4);
                   //console.log(gui.userData);
                   //var dmx = setTimeout(window.simulator.getRobotById,1000,"arm");
-                  var dmx = window.simulator.getRobotById("arm");
+                  var dmx = window.simulator.getRobotById(robot.id);
                   dmx.build(l1,l2,l3,l4);
-                  const robot_ready = new Event('robot_ready');
+                  const robot_ready = new CustomEvent('robot_ready',{detail:robot.id});
                   window.dispatchEvent(robot_ready);
 
                 }
@@ -658,12 +658,12 @@ var Simulator = function ( defaults ) {
         var values = $.extend ( {}, this.defaults.light, options );
         
         //this.light = new THREE.SpotLight( values.color, values.intensity );
-        this.light = new THREE.PointLight(values.color, values.intensity);
+        this.light = new THREE.DirectionalLight(values.color, values.intensity);
         this.light.position.copy( values.position );
-        this.light.castShadow = true;
+        //this.light.castShadow = true;
         //this.light.shadowMapDebug = true;
         //this.light.shadowCameraNear = values.near;
-        //this.light.shadowCameraFar = values.far;
+        //his.light.shadowCameraFar = values.far;
         this.scene.add( this.light );
         //this.helper = new THREE.SpotLightHelper( this.light);
         //this.scene.add(this.helper);

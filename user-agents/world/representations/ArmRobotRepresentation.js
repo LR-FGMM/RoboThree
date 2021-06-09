@@ -64,17 +64,20 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
         }
     }, this.initialValues);
 
+    this.initial_x = this.initialValues.position.x;
+    this.initial_z = this.initialValues.position.z;
+
     this.model_scale = 3;
     this.l1 = l1;
     this.l1.castShadow = true;
     this.l1.receiveShadow = true;
-    this.l1.position.set(0, this.model_scale*10, 0);
+    this.l1.position.set(this.initial_x, this.model_scale*10+800, this.initial_z);
 
     this.dmx_scale = this.model_scale * 0.1;
     this.l1.scale.set(this.dmx_scale,this.dmx_scale,this.dmx_scale);
     this.l1.name = 'l1';
 
-    this.l1.rotation.set(Math.PI / 2,0,0);
+    this.l1.rotation.set((3/2)*Math.PI ,0,0);
 
 
     this.l2 = l2;
@@ -125,10 +128,10 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
 
     this.lightHelper = new THREE.SpotLightHelper( this.spotLight ,5);
     //var geometry	= new THREE.CylinderGeometry( 0.1, 1.5, 5, 32*2, 20, true);
-    var geo_cone = new THREE.CylinderGeometry( 0.1, 1.5, 5, 32*2, 20, true);
+    var geo_cone = new THREE.CylinderGeometry( 0.1, 1.5, 7, 32*2, 20, true);
     var cone_scale = 500;
     geo_cone.scale(cone_scale,cone_scale,cone_scale);
-	geo_cone.applyMatrix( new THREE.Matrix4().makeTranslation( 0, -3.2*cone_scale, 0 ) );
+	geo_cone.applyMatrix( new THREE.Matrix4().makeTranslation( 0, -4*cone_scale, 0 ) );
 	geo_cone.applyMatrix( new THREE.Matrix4().makeRotationX( -Math.PI / 2 ) );
 
    
