@@ -360,7 +360,7 @@ RobotsManager.prototype.addRobot = function ( robot ) {
 
             var l1, l2, l3, l4;
         
-            loader.load( './models/base.stl', function ( geometry ) {
+            loader.load( './models/dmx2/base.stl', function ( geometry ) {
         
                 const material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
                 l1 = new THREE.Mesh( geometry, material );
@@ -369,7 +369,7 @@ RobotsManager.prototype.addRobot = function ( robot ) {
                 
             } );
             
-            loader.load( './models/brazos.stl', function ( geometry ) {
+            loader.load( './models/dmx2/brazos.stl', function ( geometry ) {
         
                 const material2 = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
                 l2 = new THREE.Mesh( geometry, material2 );
@@ -378,7 +378,7 @@ RobotsManager.prototype.addRobot = function ( robot ) {
                 
             } );
         
-            loader.load( './models/cabeza.stl', function ( geometry ) {
+            loader.load( './models/dmx2/cabeza.stl', function ( geometry ) {
         
                 const material3 = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
                 l3 = new THREE.Mesh( geometry, material3 );
@@ -387,7 +387,7 @@ RobotsManager.prototype.addRobot = function ( robot ) {
                 
             } );
         
-            loader.load( './models/luz.stl', function ( geometry ) {
+            loader.load( './models/dmx2/leds.stl', function ( geometry ) {
         
                 const material4 = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
                 l4 = new THREE.Mesh( geometry, material4 );

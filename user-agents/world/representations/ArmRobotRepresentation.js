@@ -68,37 +68,51 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
     this.l1 = l1;
     this.l1.castShadow = true;
     this.l1.receiveShadow = true;
-    this.l1.position.set(0, this.model_scale*10, 0);
+    //this.l1.position.set(0, this.model_scale*10+500, 0);
 
+    const box = new THREE.Box3().setFromObject(this.l1);
+    const l1_center = box.center(new THREE.Vector3());
+    //this.l1.position.set(
+    //    this.l1.position.x - l1_center.x,
+    //    this.l1.position.y - l1_center.y+600,
+    //    this.l1.position.z - l1_center.z
+//
+  //  );
+    
     this.dmx_scale = this.model_scale * 0.1;
     this.l1.scale.set(this.dmx_scale,this.dmx_scale,this.dmx_scale);
     this.l1.name = 'l1';
 
-    this.l1.rotation.set(Math.PI / 2,0,0);
+    //this.l1.rotation.set(Math.PI / 2,0,0);
 
 
     this.l2 = l2;
     this.l2.castShadow = true;
     this.l2.receiveShadow = true;
-    this.l2.position.set(0, 0,100);
+    //this.l2.position.set(0, 0,0);
 
     this.l2.name = 'l2';
-    this.l2.rotation.set(Math.PI,0,0);
+    //this.l2.rotation.set(Math.PI,0,0);
+
+    const sphere1 = new THREE.SphereGeometry( 5, 32, 32 );
+    const material_sphere = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    //const sphere = new THREE.Mesh( sphere1, material_sphere );
 
     this.j1 = new THREE.Object3D();
-    this.j1.translateZ(-10);
+    this.j1 = new THREE.Mesh( sphere1, material_sphere );
+    //this.j1.translateZ(-10);
     this.j1Axis = new THREE.Vector3(0, 0, 1);
 
     const l3_offset = 165;
 
     this.j2 = new THREE.Object3D();
-    this.j2.translateZ(l3_offset);
+    //this.j2.translateZ(l3_offset);
 
 
     this.l3 = l3;
     this.l3.castShadow = true;
     this.l3.receiveShadow = true;
-    this.l3.translateZ(-l3_offset);
+    //this.l3.translateZ(-l3_offset);
 
     this.l3.name = 'l3';
 
@@ -108,7 +122,7 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
     this.l4.name = 'l4'
 
     this.spotLight = new THREE.SpotLight( 'blue',this.light_intensity);
-    this.spotLight.position.set( 0, 0, 300 );
+    this.spotLight.position.set( 0, 0, 0 );
     
     this.spotLight.castShadow = true;
     this.spotLight.shadowCameraNear = 11;
@@ -121,7 +135,7 @@ ArmRobotRepresentation.prototype.addBody = function addBody (l1,l2,l3,l4) {
     this.spotLight.distance = 0;
 
     
-    this.spotLight.target.position.set(0,0,301);
+    this.spotLight.target.position.set(0,0,0);
 
     this.lightHelper = new THREE.SpotLightHelper( this.spotLight ,5);
     //var geometry	= new THREE.CylinderGeometry( 0.1, 1.5, 5, 32*2, 20, true);
@@ -175,38 +189,42 @@ ArmRobotRepresentation.prototype.finalizeBody = function finalizeBody () {
 ArmRobotRepresentation.prototype.updateJointsAngles = function updateJointsAngles (angle1,angle2){
     //this.armConstraint.configureAngularMotor( 2, 0.1, 0, 50, 15000 );
     //this.j1.setRotationFromAxisAngle(this.j1Axis, angle * Math.PI / 180);
-    this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),angle1);
-    this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),angle2);
+    //this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),angle1);
+    this.j1.rotateY(angle1);
+    this.j2.rotateY(angle2);
+    //this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),angle2);
     //this.j1.__dirtyPosition = true;
     //this.j1.__dirtyRotation = true;
     return this;
 }
 
 ArmRobotRepresentation.prototype.setYawAngle = function setYawAngle (angle){
-    this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),angle-this.yaw_state);
+    //this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),angle-this.yaw_state);
+    this.j1.rotateY(angle-this.yaw_state);
     this.yaw_state = angle;
     return this;
 }
 
 ArmRobotRepresentation.prototype.setPitchAngle = function setPitchAngle (angle){
-    this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),angle-this.pitch_state);
+    //this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),angle-this.pitch_state);
+    this.j2.rotateY(angle-this.pitch_state);
     this.pitch_state = angle;
     return this;
 }
 
 ArmRobotRepresentation.prototype.updatePitchAngle = function updatePitchAngle (angle){
     if (this.pitch_state + angle > this.pitch_max){
-        this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),this.pitch_max-this.pitch_state);
+        this.j2.rotateY(this.pitch_max-this.pitch_state);
         this.pitch_state = this.pitch_max;
         return this;
     }
     else if (this.pitch_state + angle < this.pitch_min){
-        this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),this.pitch_min-this.pitch_state);
+        this.j2.rotateY(this.pitch_min-this.pitch_state);
         this.pitch_state = this.pitch_min;
         return this;
     }
     else{
-        this.j2.rotateOnAxis(new THREE.Vector3(1,0,0),angle);
+        this.j2.rotateY(angle);
         this.pitch_state += angle;
         return this;
     }
@@ -214,17 +232,17 @@ ArmRobotRepresentation.prototype.updatePitchAngle = function updatePitchAngle (a
 
 ArmRobotRepresentation.prototype.updateYawAngle = function updateYawAngle (angle){
     if (this.yaw_state + angle > this.yaw_max){
-        this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),this.yaw_max-this.yaw_state);
+        this.j1.rotateY(this.yaw_max-this.yaw_state);
         this.yaw_state = this.yaw_max;
         return this;
     }
     else if (this.yaw_state + angle < this.yaw_min){
-        this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),this.yaw_min-this.yaw_state);
+        this.j1.rotateY(this.yaw_min-this.yaw_state);
         this.yaw_state = this.yaw_min;
         return this;
     }
     else{
-        this.j1.rotateOnAxis(new THREE.Vector3(0,0,1),angle);
+        this.j1.rotateY(angle);
         this.yaw_state += angle;
         return this;
     }
