@@ -230,6 +230,12 @@ ArmRobotRepresentation.prototype.updateYawAngle = function updateYawAngle (angle
     }
 }
 
+ArmRobotRepresentation.prototype._addMultipleTasks = function _addMultipleTasks(tasks){
+    this.tasks = tasks;
+    return this;
+
+}
+
 ArmRobotRepresentation.prototype._addTask = function _addTask(a,value){
     console.log(typeof(value));
     if(value == null){
